@@ -5,7 +5,7 @@ package ru.job4j.max;
  *
  * @author Afonin Sergey (afonin1c@mail.ru)
  * @version 01
- * @since 05.10.2017
+ * @since 06.10.2017
  */
 public class Max {
 

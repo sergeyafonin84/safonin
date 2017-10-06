@@ -1,6 +1,6 @@
 /**
- *package ru.job4j.calculator;
- *Package for calculator task.
+ *package ru.job4j.condition;
+ *Package for condition task.
  *
  *@author Afonin Sergey (mailto:afonin1c@mail.ru)
  *@version 1
