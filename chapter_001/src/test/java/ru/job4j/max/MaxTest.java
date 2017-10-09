@@ -23,7 +23,7 @@ public class MaxTest {
     @Test
     public void whenFirstLessSecond() {
         Max maxim = new Max();
-        int result = maxim.max(1, 2);
-        assertThat(result, is(2));
+        int result = maxim.max(1, 2, 3);
+        assertThat(result, is(3));
     }
 }

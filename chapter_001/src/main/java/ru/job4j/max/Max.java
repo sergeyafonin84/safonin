@@ -26,4 +26,16 @@ public class Max {
         return this.result;
     }
 
+    /**
+     * Method max.
+     * @param first First value.
+     * @param second Second value.
+     * @param third Third value.
+     * @return max value
+     */
+    public int max(int first, int second, int third) {
+//        return 1;
+        return max(max(first, second), third);
+    }
+
 }
