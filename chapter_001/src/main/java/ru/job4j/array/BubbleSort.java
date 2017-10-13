@@ -14,29 +14,15 @@ public class BubbleSort {
      * @return sorted array.
      */
     public int[] sort(int[] array) {
-
-        boolean needToBeSorted = true;
-
-        while (needToBeSorted) {
-
-            needToBeSorted = false;
-
-            for (int i = 0; i < array.length - 1; i++) {
-               if (array[i] > array[i + 1]) {
-                   needToBeSorted = true;
-                   int rightElementOfArray = array[i + 1];
-                   int leftElementOfArray = array[i];
-
-                   array[i + 1] = leftElementOfArray;
-                   array[i] = rightElementOfArray;
-
-               }
+        for (int i = array.length - 1; i>0; i--) {
+            for (int j = 0; j<i; j++) {
+                if (array[j] > array[j+1]) {
+                    int tmp = array[j];
+                    array[j] = array[j+1];
+                    array[j+1] = tmp;
+                }
             }
-
         }
-
         return array;
-
     }
-
 }
