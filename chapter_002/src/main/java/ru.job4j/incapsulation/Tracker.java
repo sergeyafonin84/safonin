@@ -102,7 +102,7 @@ public class Tracker {
     public Item[] findByName(String key) {
         int quontityOfElements = 0;
         for (int index = 0; index < items.length; index++) {
-            if (items[index] != null && items[index].name.equals(key)) {
+            if (items[index] != null && items[index].getName().equals(key)) {
                 quontityOfElements = quontityOfElements + 1;
             }
         }
@@ -111,7 +111,7 @@ public class Tracker {
         int indexReturnItems = 0;
 
         for (int index = 0; index < items.length; index++) {
-            if (items[index] != null && items[index].name.equals(key)) {
+            if (items[index] != null && items[index].getName().equals(key)) {
                 returnItems[indexReturnItems] = items[index];
                 indexReturnItems = indexReturnItems + 1;
             }
@@ -143,7 +143,7 @@ public class Tracker {
     void edit(Item item) {
 
         Item itemForEdit = findById(item.getId());
-        itemForEdit.name = item.name;
+        itemForEdit.setName(item.getName());
         itemForEdit.description = item.description;
 
     }
@@ -158,5 +158,27 @@ public class Tracker {
             result[index] = this.items[index];
         }
         return result;
+    }
+
+    /**
+     *
+     */
+    public String showItem(Item item) {
+        return "Item id: " + item.getId() + " name: " + item.getName() + " descreption: " + item.getDescription() + " create: " + item.getCreate() + "\n";
+    }
+
+    /**
+     *
+     */
+    public String showAll() {
+        String resultString = "";
+        //Item[] result = new Item[this.position];
+        for (int index = 0; index != this.position; index++) {
+            if (this.items[index] != null) {
+                resultString =  resultString + showItem(this.items[index]);
+            }
+
+        }
+        return resultString;
     }
 }
