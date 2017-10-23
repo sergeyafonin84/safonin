@@ -1,4 +1,4 @@
-package ru.job4j.incapsulation;
+package ru.job4j.start;
 
 public class StubInput implements Input {
     private String[] answers;
