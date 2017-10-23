@@ -4,6 +4,7 @@ package ru.job4j.inheritance;
  * teacher.
  */
 public class Teacher extends Profession {
+
     /**
      * teach.
      * @param student param.
@@ -11,8 +12,8 @@ public class Teacher extends Profession {
      */
     public String teach(Student student) {
 
-        student.goodKnowlige = true;
+        student.setGoodKnowlige(true);
 
-        return "Учитель " + this.getName() + " обучил студента: " + student.human.name;
+        return "Учитель " + super.getHuman().getName() + " обучил студента: " + student.getHuman().getName();
     }
 }

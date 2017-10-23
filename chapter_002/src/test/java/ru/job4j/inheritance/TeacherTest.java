@@ -16,14 +16,14 @@ public class TeacherTest {
     public void whenTeacherTeachStudent() {
 
         Human humanTeacher = new Human();
-        humanTeacher.name = "Сергей";
+        humanTeacher.setName("Сергей");
         Teacher teacher = new Teacher();
-        teacher.human = humanTeacher;
+        teacher.setHuman(humanTeacher);
 
         Human humanStudent = new Human();
-        humanStudent.name = "Кеша";
+        humanStudent.setName("Кеша");
         Student student = new Student();
-        student.human = humanStudent;
+        student.setHuman(humanStudent);
 
         String result = teacher.teach(student);
 

@@ -13,26 +13,60 @@ public class StartUi {
      *
      */
     private static final String ADDNEWITEM = "0";
+    /**
+     *
+     */
     private static final String SHOWALLITEMS = "1";
+    /**
+     *
+     */
     private static final String EDITITEM = "2";
+    /**
+     *
+     */
     private static final String DELETEITEM = "3";
+    /**
+     *
+     */
     private static final String FINDITEMBYID = "4";
+    /**
+     *
+     */
     private static final String FINDITEMSBYNAME = "5";
+
+
+    /**
+     *
+      */
     private static final String EXIT = "6";
 
+    /**
+     *
+     * @param input input.
+     */
     public StartUi(Input input) {
         this.input = input;
     }
 
+    /**
+     * init.
+     */
     public void init() {
 
-        String theMainQuestion = "0. Add new Item\n" +
-                "1. Show all items\n" +
-                "2. Edit item\n" +
-                "3. Delete item\n" +
-                "4. Find item by Id\n" +
-                "5. Find items by name\n" +
-                "6. Exit Program\n" +
+        String theMainQuestion = "0. Add new Item\n"
+                +
+                "1. Show all items\n"
+                +
+                "2. Edit item\n"
+                +
+                "3. Delete item\n"
+                +
+                "4. Find item by Id\n"
+                +
+                "5. Find items by name\n"
+                +
+                "6. Exit Program\n"
+                +
                 "Select:";
 
         String userAnswer = "";
@@ -71,6 +105,10 @@ public class StartUi {
         }
     }
 
+    /**
+     *
+     * @param tracker tracker.
+     */
     public void addNewItem(Tracker tracker) {
 
         String userAnswerUserName = input.ask("Enter your name!");
@@ -85,12 +123,20 @@ public class StartUi {
         }
     }
 
+    /**
+     *
+     * @param tracker tracker.
+     */
     public void showAllItems(Tracker tracker) {
 
         String allItems = tracker.showAll();
         System.out.println(allItems);
     }
 
+    /**
+     *
+     * @param tracker tracker.
+     */
     public void editItem(Tracker tracker) {
 
         String userUnswerIdOfTheItem = input.ask("Enter the id of the Item");
@@ -108,6 +154,10 @@ public class StartUi {
         }
     }
 
+    /**
+     *
+     * @param tracker tracker.
+     */
     public void deleteItem(Tracker tracker) {
 
         String userUnswerIdOfTheItem = input.ask("Enter the id of the Item");
@@ -119,6 +169,10 @@ public class StartUi {
         }
     }
 
+    /**
+     *
+     * @param tracker tracker.
+     */
     public void findItemById(Tracker tracker) {
 
         String userUnswerIdOfTheItem = input.ask("Enter the id of the Item");
@@ -130,6 +184,10 @@ public class StartUi {
         }
     }
 
+    /**
+     *
+     * @param tracker tracker.
+     */
     public void findItemsByName(Tracker tracker) {
 
         String userAnswerOfTheItemsName = input.ask("Enter the Name of the Item");
@@ -143,9 +201,13 @@ public class StartUi {
         }
     }
 
-    public static void main(String args[]) {
+    /**
+     *
+     * @param args args.
+     */
+    public static void main(String[] args) {
 
-        Input input = new ConsoleInput();//StubInput(new String[] {"create stub task"});
+        Input input = new ConsoleInput(); //StubInput(new String[] {"create stub task"});
         new StartUi(input).init();
     }
 }

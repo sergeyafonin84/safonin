@@ -17,15 +17,15 @@ public class EngineerTest {
     public void whenEngineerBuildHouse() {
 
         Human humanEngineer = new Human();
-        humanEngineer.name = "Иван";
+        humanEngineer.setName("Иван");
         Engineer engineer = new Engineer();
-        engineer.human = humanEngineer;
+        engineer.setHuman(humanEngineer);
 
         House result = engineer.build();
 
         House expectedHouse = new House();
-        expectedHouse.engineer = engineer;
-        expectedHouse.goodCondition = true;
+        expectedHouse.setEngineer(engineer);
+        expectedHouse.setGoodCondition(true);
 
         assertEquals(expectedHouse, result);
     }
@@ -37,15 +37,15 @@ public class EngineerTest {
     public void whenEngineerCreateVechicle() {
 
         Human humanEngineer = new Human();
-        humanEngineer.name = "Иван";
+        humanEngineer.setName("Иван");
         Engineer engineer = new Engineer();
-        engineer.human = humanEngineer;
+        engineer.setHuman(humanEngineer);
 
         Vechicle result = engineer.create();
 
         Vechicle expectedVechicle = new Vechicle();
-        expectedVechicle.engineer = engineer;
-        expectedVechicle.goodCondition = true;
+        expectedVechicle.setEngineer(engineer);
+        expectedVechicle.setGoodCondition(true);
 
         assertEquals(expectedVechicle, result);
     }
@@ -57,14 +57,14 @@ public class EngineerTest {
     public void whenEngineerrepairHouse() {
 
         House house = new House();
-        house.goodCondition = false;
+        house.setGoodCondition(false);
 
         Human humanEngineer = new Human();
-        humanEngineer.name = "Иван";
+        humanEngineer.setName("Иван");
         Engineer engineer = new Engineer();
-        engineer.human = humanEngineer;
+        engineer.setHuman(humanEngineer);
 
-        house.engineer = engineer;
+        house.setEngineer(engineer);
 
         String result = engineer.repairHouse(house);
 
@@ -80,14 +80,14 @@ public class EngineerTest {
     public void whenEngineerrepairVechicle() {
 
         Vechicle vechicle = new Vechicle();
-        vechicle.goodCondition = false;
+        vechicle.setGoodCondition(false);
 
         Human humanEngineer = new Human();
-        humanEngineer.name = "Иван";
+        humanEngineer.setName("Иван");
         Engineer engineer = new Engineer();
-        engineer.human = humanEngineer;
+        engineer.setHuman(humanEngineer);
 
-        vechicle.engineer = engineer;
+        vechicle.setEngineer(engineer);
 
         String result = engineer.repairVechicle(vechicle);
 

@@ -11,20 +11,27 @@ public class Item {
     private String id;
 
     /**
-     * Item name.
+     * name.
      */
-    public String name;
+    private String name;
 
     /**
      * Item description.
      */
-    public String description;
+    private String description;
 
     /**
      * Item create.
      */
-    public long create;
+    private long create;
 
+    /**
+     *
+     * @param create set create.
+     */
+    public void setCreate(long create) {
+        this.create = create;
+    }
     /**
      * constructor.
      */

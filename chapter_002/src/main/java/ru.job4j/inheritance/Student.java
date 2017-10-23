@@ -7,5 +7,14 @@ public class Student extends Profession {
     /**
      * knowlige.
      */
-    public Boolean goodKnowlige;
+    private Boolean goodKnowlige;
+
+    /**
+     *
+     * @param goodKnowlige knowlige.
+     */
+    public void setGoodKnowlige(Boolean goodKnowlige) {
+        this.goodKnowlige = goodKnowlige;
+    }
+
 }

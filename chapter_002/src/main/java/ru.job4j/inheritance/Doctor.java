@@ -6,7 +6,7 @@ public class Doctor extends Profession {
     /**
      * diploma.
      */
-    public String diploma;
+    private String diploma;
 
     /**
      *
@@ -15,8 +15,8 @@ public class Doctor extends Profession {
      */
     public String heal(Human human) {
 
-        human.goodHealth = true;
+        human.setGoodHealth(true);
 
-        return "Доктор " + this.getName() + " лечит " + human.name;
+        return "Доктор " + this.getHuman().getName() + " лечит " + human.getName();
     }
 }

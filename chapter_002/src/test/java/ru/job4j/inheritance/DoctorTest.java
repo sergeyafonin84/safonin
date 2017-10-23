@@ -15,12 +15,12 @@ public class DoctorTest {
     @Test
     public void whenDoctorHealHuman() {
         Human human = new Human();
-        human.name = "Сергей";
+        human.setName("Сергей");
 
         Human humanDoctor = new Human();
-        humanDoctor.name = "Иван";
+        humanDoctor.setName("Иван");
         Doctor doctor = new Doctor();
-        doctor.human = humanDoctor;
+        doctor.setHuman(humanDoctor);
 
         String result = doctor.heal(human);
 

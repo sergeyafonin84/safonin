@@ -8,14 +8,23 @@ public class Profession {
     /**
      * human.
      */
-    Human human;
+    private Human human;
+
+
 
     /**
-     * getName.
-     * @return name.
+     *
+     * @param human human.
      */
-    public String getName() {
-        return human.name;
+    public void setHuman(Human human) {
+        this.human = human;
     }
 
+    /**
+     *
+     * @return human.
+     */
+    public Human getHuman() {
+        return human;
+    }
 }

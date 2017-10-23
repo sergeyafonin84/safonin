@@ -7,15 +7,63 @@ public class Vechicle {
     /**
      * owner.
      */
-    public Human owner;
+    private Human owner;
     /**
      * engineer.
      */
-    public Engineer engineer;
+    private Engineer engineer;
     /**
      * condition.
      */
-    public Boolean goodCondition;
+    private Boolean goodCondition;
+
+    /**
+     *
+     * @param engineer engineer.
+     */
+    public void setEngineer(Engineer engineer) {
+        this.engineer = engineer;
+    }
+
+    /**
+     *
+     * @param goodCondition goodcond.
+     */
+    public void setGoodCondition(Boolean goodCondition) {
+        this.goodCondition = goodCondition;
+    }
+
+    /**
+     *
+     * @param owner owner.
+     */
+    public void setOwner(Human owner) {
+        this.owner = owner;
+    }
+
+    /**
+     *
+     * @return condition.
+     */
+    public Boolean getGoodCondition() {
+        return goodCondition;
+    }
+
+    /**
+     *
+     * @return engineer.
+     */
+    public Engineer getEngineer() {
+        return engineer;
+    }
+
+    /**
+     *
+     * @return owner.
+     */
+    public Human getOwner() {
+        return owner;
+    }
 
     /**
      * equals.
@@ -27,5 +75,14 @@ public class Vechicle {
 //        return super.equals(obj);
         Vechicle testAuto = (Vechicle) obj;
         return this.engineer == testAuto.engineer && this.goodCondition == testAuto.goodCondition && this.owner == testAuto.owner;
+    }
+
+    /**
+     *
+     * @return hascode.
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

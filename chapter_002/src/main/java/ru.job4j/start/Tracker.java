@@ -144,7 +144,7 @@ public class Tracker {
 
         Item itemForEdit = findById(item.getId());
         itemForEdit.setName(item.getName());
-        itemForEdit.description = item.description;
+        itemForEdit.setDescription(item.getDescription());
 
     }
 
@@ -162,6 +162,8 @@ public class Tracker {
 
     /**
      *
+     * @param item item.
+     * @return item.
      */
     public String showItem(Item item) {
         return "Item id: " + item.getId() + " name: " + item.getName() + " descreption: " + item.getDescription() + " create: " + item.getCreate() + "\n";
@@ -169,6 +171,7 @@ public class Tracker {
 
     /**
      *
+     * @return resultstring.
      */
     public String showAll() {
         String resultString = "";

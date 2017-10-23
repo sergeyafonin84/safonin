@@ -13,8 +13,8 @@ public class Engineer extends Profession {
      */
     public House build() {
         House newHouse = new House();
-        newHouse.engineer = this;
-        newHouse.goodCondition = true;
+        newHouse.setEngineer(this);
+        newHouse.setGoodCondition(true);
         // System.out.println("Инженер:" + this.getName() + " построил дом");
         return newHouse;
     }
@@ -25,8 +25,8 @@ public class Engineer extends Profession {
      */
     public Vechicle create() {
         Vechicle newVechicle = new Vechicle();
-        newVechicle.engineer = this;
-        newVechicle.goodCondition = true;
+        newVechicle.setEngineer(this);
+        newVechicle.setGoodCondition(true);
         // System.out.println("Инженер:" + this.getName() + " создал автомобиль");
         return newVechicle;
     }
@@ -37,8 +37,8 @@ public class Engineer extends Profession {
      * @return message that house have been repaired.
      */
     public String repairHouse(House house) {
-        house.goodCondition = true;
-        return "Инженер: " + this.getName() + " отремонтировал дом";
+        house.setGoodCondition(true);
+        return "Инженер: " + this.getHuman().getName() + " отремонтировал дом";
     }
 
     /**
@@ -47,7 +47,7 @@ public class Engineer extends Profession {
      * @return message that house have been repaired
      */
     public String repairVechicle(Vechicle vechicle) {
-        vechicle.goodCondition = true;
-        return "Инженер: " + this.getName() + " отремонтировал автомобиль";
+        vechicle.setGoodCondition(true);
+        return "Инженер: " + this.getHuman().getName() + " отремонтировал автомобиль";
     }
 }
