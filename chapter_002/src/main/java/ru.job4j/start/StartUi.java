@@ -12,6 +12,10 @@ public class StartUi {
     /**
      *
      */
+    private Tracker tracker;
+    /**
+     *
+     */
     private static final String ADDNEWITEM = "0";
     /**
      *
@@ -37,7 +41,7 @@ public class StartUi {
 
     /**
      *
-      */
+     */
     private static final String EXIT = "6";
 
     /**
@@ -47,6 +51,16 @@ public class StartUi {
     public StartUi(Input input) {
         this.input = input;
     }
+
+    /**
+     * @param tracker  tracker.
+     * @param input input.
+     */
+    public StartUi(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+    }
+
 
     /**
      * init.
@@ -71,7 +85,10 @@ public class StartUi {
 
         String userAnswer = "";
 
-        Tracker tracker = new Tracker();
+        if (tracker == null) {
+            Tracker tracker = new Tracker();
+        }
+
 
         while (!userAnswer.equals(EXIT)) {
 
@@ -142,8 +159,10 @@ public class StartUi {
         String userUnswerIdOfTheItem = input.ask("Enter the id of the Item");
         Item foudedItemById = tracker.findById(userUnswerIdOfTheItem);
         if (foudedItemById.getId() != null) {
+            String userUnswerNewNameOfTheItem = input.ask("Enter new name of the Item");
             String userUnswerNewDescreptionOfTheItem = input.ask("Enter new description of the Item");
-            if (!userUnswerNewDescreptionOfTheItem.equals("")) {
+            if (!userUnswerNewDescreptionOfTheItem.equals("") && !userUnswerNewNameOfTheItem.equals("")) {
+                foudedItemById.setName(userUnswerNewNameOfTheItem);
                 foudedItemById.setDescription(userUnswerNewDescreptionOfTheItem);
                 tracker.edit(foudedItemById);
             } else {

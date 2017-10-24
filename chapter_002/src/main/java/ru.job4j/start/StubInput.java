@@ -4,6 +4,7 @@ package ru.job4j.start;
  *
  */
 public class StubInput implements Input {
+
     /**
      *
      */

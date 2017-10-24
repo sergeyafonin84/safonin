@@ -25,10 +25,12 @@ public class Tracker {
     /**
      * void add(Item item) {}; добавление заявок - public Item add(Item); 1. Метод public Item add(Item) добавляет заявку, переданную в аргументах в массив заявок this.items.
      * @param item is item for add to array items.
+     * @return item.
      */
-    public void add(Item item) {
+    public Item add(Item item) {
         item.setId(this.generateId());
         this.items[position++] = item;
+        return item;
     }
 
     /**
