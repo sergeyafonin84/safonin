@@ -1,7 +1,24 @@
 package ru.job4j.start;
 
 /**
- *
+ * 5. Переписать в классе StartUI метод void init() с учетом доработки меню.
+ * Пример:
+
+ При запуске класса StartUI пользователю отображается следующее меню:
+
+ Add new Item
+ Show all items
+ Edit item
+ Delete item
+ Find item by Id
+ Find items by name
+ Exit Program
+ Select:
+
+ При выборе пункта меню 0, программа должна запросить: имя пользователя и описание заявки, после этого добавить эту заявку в трекер.
+
+ При выборе пункта меню 4, программа должна запросить у пользователя id заявки, после этого отобразить найденную заявку на экране.
+
  */
 public class StartUi {
     /**
@@ -62,6 +79,20 @@ public class StartUi {
     }
 
 
+    /**
+     * init.
+     */
+
+    public void init(String newInit) {
+        // tracker = new Tracker();
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        menu.fillActions();
+        do {
+            menu.show();
+            int key = Integer.valueOf(input.ask("Select: "));
+            menu.select(key);
+        } while (!"y".equals(this.input.ask("Exit?(y):")));
+    }
     /**
      * init.
      */
@@ -227,6 +258,8 @@ public class StartUi {
     public static void main(String[] args) {
 
         Input input = new ConsoleInput(); //StubInput(new String[] {"create stub task"});
-        new StartUi(input).init();
+//        new StartUi(input).init();
+        Tracker tracker = new Tracker();
+        new StartUi(input, tracker).init("kjkhjjk");
     }
 }
