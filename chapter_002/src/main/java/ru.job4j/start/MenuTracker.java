@@ -120,11 +120,17 @@ public class MenuTracker {
 //    }
 
     public void select(int key) {
-        for (UserAction action : actions) {
-            if (action.key() == key) {
-                this.actions[key].execute(this.input, this.tracker);
-            }
+//        for (UserAction action : actions) {
+//            if (action.key() == key) {
+//                this.actions[key].execute(this.input, this.tracker);
+//            }
+//        }
+        try {
+            this.actions[key].execute(this.input, this.tracker);
+        } catch (ArrayIndexOutOfBoundsException aaa) {
+            System.out.println("Please enter valid value!");
         }
+
     }
 
     public void show() {

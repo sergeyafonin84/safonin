@@ -11,4 +11,12 @@ public interface Input {
      */
     String ask(String question);
 
+    /**
+     * Перегрузить метод ask ( int ask(String question, int[] range); ) в интерфейсе Input.
+     * @param question
+     * @param range
+     * @return
+     */
+    int ask(String question, int[] range);
+
 }

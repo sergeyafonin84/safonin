@@ -21,6 +21,11 @@ package ru.job4j.start;
 
  */
 public class StartUi {
+
+    /**
+     *
+     */
+    private int[] ranges = new int[] {0, 1, 2, 3, 4, 5};
     /**
      *
      */
@@ -89,8 +94,10 @@ public class StartUi {
         menu.fillActions();
         do {
             menu.show();
-            int key = Integer.valueOf(input.ask("Select: "));
-            menu.select(key);
+           // int key = Integer.valueOf(input.ask("Select: "));
+           // menu.select(key);
+            menu.select(input.ask("select:", ranges));
+
         } while (!"y".equals(this.input.ask("Exit?(y):")));
     }
     /**
@@ -257,7 +264,7 @@ public class StartUi {
      */
     public static void main(String[] args) {
 
-        Input input = new ConsoleInput(); //StubInput(new String[] {"create stub task"});
+        Input input = new ValidateInput(); //new ConsoleInput(); //StubInput(new String[] {"create stub task"});
 //        new StartUi(input).init();
         Tracker tracker = new Tracker();
         new StartUi(input, tracker).init("kjkhjjk");
