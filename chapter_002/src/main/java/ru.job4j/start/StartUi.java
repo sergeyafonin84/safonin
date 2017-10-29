@@ -92,14 +92,152 @@ public class StartUi {
         // tracker = new Tracker();
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
+        //анонимный класс
+//        UserAction deleteAction = new UserAction() {
+//            @Override
+//            public int key() {
+//                return 3;
+//            }
+//            @Override
+//            public void execute(Input input, Tracker tracker) {
+//                String id = input.ask("Please, enter the tasks's id: ");
+//                Item item = tracker.findById(id);
+//                System.out.println(tracker.showItem(item) + " deleted");
+//                tracker.delete(item);
+//            }
+//            @Override
+//            public String info() {
+//                return "Delete";
+//            }
+//        };
+
+        UserAction addItem = new BaseAction("Add item", 0) {
+            @Override
+            public int key() {
+                return key;
+            }
+            @Override
+            public void execute(Input input, Tracker tracker) {
+                String name = input.ask("Please, enter the task's name:");
+                String desc = input.ask("Please, enter the description:");
+                tracker.add(new Item(name, desc, 123L));
+            }
+            @Override
+            public String info() {
+                return super.info();
+            }
+        };
+        menu.addAction(addItem);
+
+        UserAction showItems = new BaseAction("Show items", 1) {
+            @Override
+            public int key() {
+                return key;
+            }
+            @Override
+            public void execute(Input input, Tracker tracker) {
+                System.out.println(tracker.showAll());
+            }
+            @Override
+            public String info() {
+                return super.info();
+            }
+        };
+        menu.addAction(showItems);
+
+        UserAction editItem = new BaseAction("Edit item", 2) {
+            @Override
+            public int key() {
+                return key;
+            }
+            @Override
+            public void execute(Input input, Tracker tracker) {
+
+                String id = input.ask("Please, enter the tasks's id: ");
+                String name = input.ask("Please, enter the task's name:");
+                String desc = input.ask("Please, enter the description:");
+                Item item = new Item(name, desc, 123L);
+                item.setId(id);
+//        tracker.update(item);
+                tracker.edit(item);
+            }
+            @Override
+            public String info() {
+                return super.info();
+            }
+        };
+        menu.addAction(editItem);
+
+        UserAction deleteAction = new BaseAction("Delete", 3) {
+            @Override
+            public int key() {
+                return key;
+            }
+            @Override
+            public void execute(Input input, Tracker tracker) {
+                String id = input.ask("Please, enter the tasks's id: ");
+                Item item = tracker.findById(id);
+                System.out.println(tracker.showItem(item) + " deleted");
+                tracker.delete(item);
+            }
+            @Override
+            public String info() {
+                return super.info();
+            }
+        };
+        menu.addAction(deleteAction);
+
+        UserAction findItemById = new BaseAction("Find item by id", 4) {
+            @Override
+            public int key() {
+                return key;
+            }
+
+            @Override
+            public void execute(Input input, Tracker tracker) {
+                String id = input.ask("Please, enter the tasks's id: ");
+                Item item = tracker.findById(id);
+                System.out.println(tracker.showItem(item));
+            }
+
+            @Override
+            public String info() {
+                return super.info();
+            }
+        };
+        menu.addAction(findItemById);
+
+        UserAction findItemsByName = new BaseAction("Find items by name", 5) {
+            @Override
+            public int key() {
+                return key;
+            }
+
+            @Override
+            public void execute(Input input, Tracker tracker) {
+                String name = input.ask("Please, enter the name: ");
+                Item[] items = tracker.findByName(name);
+                for (Item item : items) {
+                    System.out.println(tracker.showItem(item));
+                }
+            }
+
+            @Override
+            public String info() {
+                return super.info();
+            }
+        };
+        menu.addAction(findItemsByName);
+
         do {
             menu.show();
-           // int key = Integer.valueOf(input.ask("Select: "));
-           // menu.select(key);
+            // int key = Integer.valueOf(input.ask("Select: "));
+            // menu.select(key);
             menu.select(input.ask("select:", ranges));
 
         } while (!"y".equals(this.input.ask("Exit?(y):")));
     }
+
     /**
      * init.
      */

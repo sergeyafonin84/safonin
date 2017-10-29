@@ -99,6 +99,9 @@ public class MenuTracker {
     private Input input;
     private Tracker tracker;
     private UserAction[] actions = new UserAction[6];
+    private int position = 0;
+
+
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -106,12 +109,22 @@ public class MenuTracker {
     }
 
     public void fillActions() {
-        this.actions[0] = new MenuTracker.AddItem(); //this.new AddItem();//new AddItem(this.input, this.tracker);
-        this.actions[1] = new MenuTracker.ShowItems(); //new ShowItems();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new FindItemById();
-        this.actions[5] = new FindItemsByName();
+//        this.actions[0] = new MenuTracker.AddItem(); //this.new AddItem();//new AddItem(this.input, this.tracker);
+//        this.actions[1] = new MenuTracker.ShowItems(); //new ShowItems();
+//        this.actions[2] = new EditItem();
+//        this.actions[3] = new DeleteItem();
+//        this.actions[4] = new FindItemById();
+//        this.actions[5] = new FindItemsByName();
+//        this.actions[position++] = new MenuTracker.AddItem(); //this.new AddItem();//new AddItem(this.input, this.tracker);
+//        this.actions[position++] = new MenuTracker.ShowItems(); //new ShowItems();
+//       this.actions[position++] = new EditItem();
+//        this.actions[position++] = new DeleteItem();
+//        this.actions[position++] = new FindItemById();
+//        this.actions[position++] = new FindItemsByName();
+    }
+
+    public void addAction(UserAction action)  {
+        this.actions[position++] = action;
     }
 
 //    public static void test() {
