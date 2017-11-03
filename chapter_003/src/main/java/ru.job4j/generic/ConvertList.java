@@ -77,18 +77,18 @@ public class ConvertList {
             return resultArray;
     }
 
-//    public List<Integer> convert(List<int[]> list) {
-//
-//        List<Integer> returnList = new ArrayList<>();
-//
-//        for (int[] currentArray : list) {
-//
-//            for (int currentElement : currentArray) {
-//
-//                returnList.add(currentElement);
-//            }
-//        }
-//        return returnList;
-//    }
+    public List<Integer> convert(List<int[]> list) {
+
+        List<Integer> returnList = new ArrayList<>();
+
+        for (int[] currentArray : list) {
+
+            for (int currentElement : currentArray) {
+
+                returnList.add(currentElement);
+            }
+        }
+        return returnList;
+    }
 
 }

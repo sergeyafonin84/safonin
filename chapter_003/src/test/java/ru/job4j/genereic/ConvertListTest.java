@@ -66,25 +66,25 @@ public class ConvertListTest {
         assertThat(result, is(expected));
     }
 
-//    @Test
-//    public void whenConvertListOfArraysThenGetList() {
-//
-//        List<int[]> list = new ArrayList<int[]>();
-//
-//        list.add(new int[]{1, 2});
-//        list.add(new int[]{3, 4, 5, 6});
-//
-//        List<Integer> result = new ConvertList().convert(list);
-//
-//        List<Integer> expected = new ArrayList<Integer>();
-//
-//        expected.add(1);
-//        expected.add(2);
-//        expected.add(3);
-//        expected.add(4);
-//        expected.add(5);
-//        expected.add(6);
-//
-//        assertThat(result, is(expected));
-//    }
+    @Test
+    public void whenConvertListOfArraysThenGetList() {
+
+        List<int[]> list = new ArrayList<int[]>();
+
+        list.add(new int[]{1, 2});
+        list.add(new int[]{3, 4, 5, 6});
+
+        List<Integer> result = new ConvertList().convert(list);
+
+        List<Integer> expected = new ArrayList<Integer>();
+
+        expected.add(1);
+        expected.add(2);
+        expected.add(3);
+        expected.add(4);
+        expected.add(5);
+        expected.add(6);
+
+        assertThat(result, is(expected));
+    }
 }
