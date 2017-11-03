@@ -41,7 +41,7 @@ public class TestingThePerformanceOfCollectionsTest {
 
         System.out.println("timeOfDeletingFromArrayList " + timeOfDeletingFromArrayList);
         System.out.println("timeOfDeletingFromLinkedList " + timeOfDeletingFromLinkedList);
-        System.out.println("timeOfDeletingFromLinkedList " + timeOfDeletingFromLinkedList);
+        System.out.println("timeOfDeletingFromTreeSet " + timeOfDeletingFromTreeSet);
 
 
 //        timeOfAddingTooArrayList 81
