@@ -22,11 +22,11 @@ public class ConvertList {
 
         int quontityOfElements = list.size();
         int remainderOfTheDivision = quontityOfElements % rows;
-        int realNumberOfRows = quontityOfElements - remainderOfTheDivision;
+//        int realNumberOfRows = quontityOfElements - remainderOfTheDivision;
 
         if (quontityOfElements >= rows) {
 
-            int finalNumberInColumn = (quontityOfElements - remainderOfTheDivision) / (rows - 1);
+            int finalNumberInColumn = ((quontityOfElements - remainderOfTheDivision) / (rows)) + 1;
 
             int totalNumberOfElements = finalNumberInColumn * rows;
 
@@ -36,9 +36,26 @@ public class ConvertList {
             int currentNumberOfColumn = 0;
             int currentNumberOfElement = 1;
 
-            for (int element : list) {
+//            for (int element : list) {
+//
+//                resultArray[currenNumberOfRow][currentNumberOfColumn] = element;
+//                if (currentNumberOfColumn < finalNumberInColumn - 1) {
+//                    currentNumberOfColumn++;
+//                } else {
+//                    currentNumberOfColumn = 0;
+//                    currenNumberOfRow++;
+//                }
+//                currentNumberOfElement++;
+//            }
+            for (int ind = 0; ind < list.size(); ind++) {
 
-                resultArray[currenNumberOfRow][currentNumberOfColumn] = element;
+
+                if (list.get(ind) == null) {
+                    resultArray[currenNumberOfRow][currentNumberOfColumn] = 0;
+                } else {
+                    resultArray[currenNumberOfRow][currentNumberOfColumn] = list.get(ind);
+                }
+
                 if (currentNumberOfColumn < finalNumberInColumn - 1) {
                     currentNumberOfColumn++;
                 } else {
