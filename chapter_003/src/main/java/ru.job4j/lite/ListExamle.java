@@ -11,7 +11,8 @@ public class ListExamle {
 //        Node next;
 //    }
 
-    static class User {
+    static class User implements Comparable<User> {
+//        static class User {
         private final String name;
 
         User(String name) {
@@ -42,14 +43,41 @@ public class ListExamle {
         public String toString() {
             return "User{" + "name='" + name + '\'' + '}';
         }
+
+       // @Override
+        public int compareTo(User o) {
+            return this.name.compareTo(o.name);
+        }
     }
 
     public static void main(String[] args) {
 
-        List<User> users = new ArrayList<User>();
-        users.addAll(Arrays.asList(new  User("serg"), new User("ivan")));
+//        List<User> users = new ArrayList<User>();
+        Set<User> users = new TreeSet<User>();
+        users.addAll(
+                Arrays.asList(
+                        new  User("serg"),
+                        new User("ivan"),
+                        new User("zuma")
+                )
+        );
 
-        Iterator<User> it = users.iterator();
+        System.out.println(users);
+
+
+
+//        users.sort(
+//                new Comparator<User>() {
+//                    @Override
+//                    public int compare(User o1, User o2) {
+//                        return o1.name.compareTo(o2.name);
+//                    }
+//                }
+//        );
+
+//        System.out.println(users);
+
+//        Iterator<User> it = users.iterator();
 
 //        System.out.println(it.next());
 //        System.out.println(it.next());
@@ -69,11 +97,11 @@ public class ListExamle {
 //        users.forEach(user -> System.out.println(user));
 //        users.forEach(System.out::println);
 
-        for (User user : users) {
-            System.out.println(user);
-        }
+//        for (User user : users) {
+//            System.out.println(user);
+//        }
 
-       // User user = new User("serg");
+        // User user = new User("serg");
 
 //        users.add((new User("serg")));
 //        users.add(user);
