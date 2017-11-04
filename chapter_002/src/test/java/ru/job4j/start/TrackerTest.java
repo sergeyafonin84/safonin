@@ -1,6 +1,8 @@
 package ru.job4j.start;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -111,9 +113,12 @@ public class TrackerTest {
         Item item4 = new Item("keyName", "testDescription4", 444L);
         tracker.add(item4);
 
-        Item[] impliedArrayOfItems = new Item[2];
-        impliedArrayOfItems[0] = item;
-        impliedArrayOfItems[1] = item4;
+//        Item[] impliedArrayOfItems = new Item[2];
+//        impliedArrayOfItems[0] = item;
+//        impliedArrayOfItems[1] = item4;
+        ArrayList<Item> impliedArrayOfItems = new ArrayList<Item>();
+        impliedArrayOfItems.add(item);
+        impliedArrayOfItems.add(item4);
 
         assertThat(tracker.findByName("keyName"), is(impliedArrayOfItems));
     }

@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * 5. Переписать в классе StartUI метод void init() с учетом доработки меню.
  * Пример:
@@ -216,7 +218,8 @@ public class StartUi {
             @Override
             public void execute(Input input, Tracker tracker) {
                 String name = input.ask("Please, enter the name: ");
-                Item[] items = tracker.findByName(name);
+//                Item[] items = tracker.findByName(name);
+                ArrayList<Item> items = tracker.findByName(name);
                 for (Item item : items) {
                     System.out.println(tracker.showItem(item));
                 }
@@ -386,8 +389,10 @@ public class StartUi {
     public void findItemsByName(Tracker tracker) {
 
         String userAnswerOfTheItemsName = input.ask("Enter the Name of the Item");
-        Item[] foudedItemsByName = tracker.findByName(userAnswerOfTheItemsName);
-        if (foudedItemsByName.length != 0) {
+//        Item[] foudedItemsByName = tracker.findByName(userAnswerOfTheItemsName);
+        ArrayList<Item> foudedItemsByName = tracker.findByName(userAnswerOfTheItemsName);
+//        if (foudedItemsByName.length != 0) {
+        if (foudedItemsByName.size() != 0) {
             for (Item item:foudedItemsByName) {
                 System.out.println(tracker.showItem(item));
             }

@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * 2. Написать класс MenuTracker который будет реализовывать меню.
  * 3. В классе MenuTracker реализовать внутренние классы событий:
@@ -82,7 +84,8 @@ class FindItemsByName implements UserAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Please, enter the name: ");
-        Item[] items = tracker.findByName(name);
+//        Item[] items = tracker.findByName(name);
+        ArrayList<Item> items = tracker.findByName(name);
         for (Item item : items) {
             System.out.println(tracker.showItem(item));
         }
@@ -98,7 +101,8 @@ public class MenuTracker {
 
     private Input input;
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[6];
+//    private UserAction[] actions = new UserAction[6];
+    private ArrayList<UserAction> actions = new ArrayList<UserAction>();
     private int position = 0;
 
 
@@ -124,7 +128,8 @@ public class MenuTracker {
     }
 
     public void addAction(UserAction action)  {
-        this.actions[position++] = action;
+//        this.actions[position++] = action;
+        this.actions.add(position++, action);
     }
 
 //    public static void test() {
@@ -139,7 +144,8 @@ public class MenuTracker {
 //            }
 //        }
         try {
-            this.actions[key].execute(this.input, this.tracker);
+//            this.actions[key].execute(this.input, this.tracker);
+            this.actions.get(key).execute(this.input, this.tracker);
         } catch (ArrayIndexOutOfBoundsException aaa) {
             System.out.println("Please enter valid value!");
         }

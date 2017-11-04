@@ -1,6 +1,8 @@
 package ru.job4j.start;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -51,15 +53,19 @@ public class StubInputTest {
                                                      "0", "name3", "description3", "1", "6"});
         new StartUi(input, tracker).init();
 
-        Item[] itemsForDeleting = tracker.findByName(new String("nameForItemDelete"));
+//        Item[] itemsForDeleting = tracker.findByName(new String("nameForItemDelete"));
+        ArrayList<Item> itemsForDeleting = tracker.findByName(new String("nameForItemDelete"));
 
-        String[] operatorsForDeleting = new String[itemsForDeleting.length * 2 + 1];
+//        String[] operatorsForDeleting = new String[itemsForDeleting.length * 2 + 1];
+        String[] operatorsForDeleting = new String[itemsForDeleting.size() * 2 + 1];
 
         Integer k = 0;
 
-        for (Integer index = 0; index < itemsForDeleting.length; index++) {
+//        for (Integer index = 0; index < itemsForDeleting.length; index++) {
+        for (Integer index = 0; index < itemsForDeleting.size(); index++) {
 
-            String idOfTheItem = itemsForDeleting[index].getId();
+//            String idOfTheItem = itemsForDeleting[index].getId();
+            String idOfTheItem = itemsForDeleting.get(index).getId();
 
             operatorsForDeleting[k] = "3";
             k = k + 1;
@@ -83,7 +89,8 @@ public class StubInputTest {
                 "0", "name3", "description3", "1", "6"});
         new StartUi(input, tracker).init();
 
-        String idOfThirdItem = tracker.findByName("name3")[0].getId();
+//        String idOfThirdItem = tracker.findByName("name3")[0].getId();
+        String idOfThirdItem = tracker.findByName("name3").get(0).getId();
 
         Input input2 = new StubInput(new String[] {"1", "4", idOfThirdItem, "2", idOfThirdItem, "whenFindByIdThenHasItemName", "whenFindByIdThenHasItemDesc", "1", "6"});
 

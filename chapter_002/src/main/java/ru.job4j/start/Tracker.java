@@ -1,4 +1,6 @@
 package ru.job4j.start;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -10,7 +12,9 @@ public class Tracker {
     /**
      * items is an array for items.
      */
-    private Item[] items = new Item[100];
+//    private Item[] items = new Item[100];
+    private ArrayList<Item> items = new ArrayList<Item>();
+
 
     /**
      * position is the counter that counts number of elements that had been added.
@@ -29,7 +33,8 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(this.generateId());
-        this.items[position++] = item;
+//        this.items[position++] = item;
+        this.items.add(position++, item);
         return item;
     }
 
@@ -63,9 +68,15 @@ public class Tracker {
      */
     public void delete(Item item) {
         String id = item.getId();
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null && items[index].getId().equals(id)) {
-                items[index] = null;
+//        for (int index = 0; index < items.length; index++) {
+//            if (items[index] != null && items[index].getId().equals(id)) {
+//                items[index] = null;
+//                break;
+//            }
+//        }
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index) != null && items.get(index).getId().equals(id)) {
+                items.set(index, null);
                 break;
             }
         }
@@ -77,8 +88,13 @@ public class Tracker {
      */
     public Item[] findAll() {
         int quontityOfElements = 0;
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null) {
+//        for (int index = 0; index < items.length; index++) {
+//            if (items[index] != null) {
+//                quontityOfElements = quontityOfElements + 1;
+//            }
+//        }
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index) != null) {
                 quontityOfElements = quontityOfElements + 1;
             }
         }
@@ -86,12 +102,19 @@ public class Tracker {
         Item[] returnItems = new Item[quontityOfElements];
         int indexReturnItems = 0;
 
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null) {
-                returnItems[indexReturnItems] = items[index];
+//        for (int index = 0; index < items.length; index++) {
+//            if (items[index] != null) {
+//                returnItems[indexReturnItems] = items[index];
+//                indexReturnItems = indexReturnItems + 1;
+//            }
+//        }
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index) != null) {
+                returnItems[indexReturnItems] = items.get(index);
                 indexReturnItems = indexReturnItems + 1;
             }
         }
+
         return returnItems;
     }
 
@@ -101,20 +124,35 @@ public class Tracker {
      * @param key is a name by which function finds elements from array.
      * @return all items with the same name
      */
-    public Item[] findByName(String key) {
+//    public Item[] findByName(String key) {
+    public ArrayList<Item> findByName(String key) {
         int quontityOfElements = 0;
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null && items[index].getName().equals(key)) {
+//        for (int index = 0; index < items.length; index++) {
+//            if (items[index] != null && items[index].getName().equals(key)) {
+//                quontityOfElements = quontityOfElements + 1;
+//            }
+//        }
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index) != null && items.get(index).getName().equals(key)) {
                 quontityOfElements = quontityOfElements + 1;
             }
         }
 
-        Item[] returnItems = new Item[quontityOfElements];
+//        Item[] returnItems = new Item[quontityOfElements];
+        ArrayList<Item> returnItems = new ArrayList<Item>();
         int indexReturnItems = 0;
 
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null && items[index].getName().equals(key)) {
-                returnItems[indexReturnItems] = items[index];
+//        for (int index = 0; index < items.length; index++) {
+//            if (items[index] != null && items[index].getName().equals(key)) {
+//                returnItems[indexReturnItems] = items[index];
+//                indexReturnItems = indexReturnItems + 1;
+//            }
+//        }
+
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index) != null && items.get(index).getName().equals(key)) {
+//                returnItems[indexReturnItems] = items.get(index);
+                returnItems.add(indexReturnItems, items.get(index));
                 indexReturnItems = indexReturnItems + 1;
             }
         }
@@ -157,7 +195,8 @@ public class Tracker {
     public Item[] getAll() {
         Item[] result = new Item[this.position];
         for (int index = 0; index != this.position; index++) {
-            result[index] = this.items[index];
+//            result[index] = this.items[index];
+            result[index] = this.items.get(index);
         }
         return result;
     }
@@ -179,8 +218,11 @@ public class Tracker {
         String resultString = "";
         //Item[] result = new Item[this.position];
         for (int index = 0; index != this.position; index++) {
-            if (this.items[index] != null) {
-                resultString =  resultString + showItem(this.items[index]);
+//            if (this.items[index] != null) {
+//                resultString =  resultString + showItem(this.items[index]);
+//            }
+            if (this.items.get(index) != null) {
+                resultString =  resultString + showItem(this.items.get(index));
             }
 
         }
