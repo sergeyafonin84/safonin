@@ -7,24 +7,6 @@ import java.util.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-//пока не исправил компаратор, то тест был красным
-//@Override
-//public String toString() {
-//        return "User{" + "name='" + name + '\'' + ", age=" + age + '}';
-//        }
-//
-//@Override
-//public int compareTo(User o) {
-//        // return this.age > o.age ? 1 : -1;
-//
-//        if (this.age > o.age) {
-//        return 1;
-//        } else if (this.age < o.age) {
-//        return -1;
-//        } else {
-//        return 0;
-//        }
-//        }
 public class SortUserTest {
 
     @Test
@@ -50,43 +32,57 @@ public class SortUserTest {
         assertThat(resultUserTreeSet, is(expectedtuserTreeSet));
     }
 
-//    @Test
-//    public void whenSortUserInListAndConvertToTreeSetThenGetTreeSetWithSortedUsers() {
-//
-//        List<User> userList = new ArrayList<User>();
-//        userList.addAll(Arrays.asList(
-//                new  User("serg", 33),
-//                new User("zuma", 11),
-//                new User("ivan", 22)
-//
-//                )
-//        );
-//
-//        SortUser sortUser = new SortUser();
-//
-//        TreeSet<User> resultUserTreeSet = sortUser.sort(userList);
-//
-//        TreeSet<User> expectedtuserTreeSet = new TreeSet<User>();
-//
-//        expectedtuserTreeSet.add(new User("zuma", 11));
-//        expectedtuserTreeSet.add(new User("ivan", 22));
-//        expectedtuserTreeSet.add(new  User("serg", 33));
-//
-//        String resultString = "";
-//        String expectedString = "";
-//
-//        for (User resultUser : resultUserTreeSet) {
-//            resultString = addStringToString(resultString, resultUser.toString());
-//        }
-//
-//        for (User expectedUser : expectedtuserTreeSet) {
-//            expectedString = addStringToString(expectedString, expectedUser.toString());
-//        }
-//
-//        assertThat(resultString, is(expectedString));
-//    }
-//
-//    String addStringToString(String s1, String s2) {
-//        return s1 + s2;
-//    }
+    @Test
+    public void whenUserListSortedByNameAndAgeThenGetUserListSortedByNameAndAge() {
+
+        List<User> userList = new ArrayList<User>();
+        userList.addAll(Arrays.asList(
+                new User("Сергей", 25),
+                new User("Иван", 30),
+                new User("Сергей", 20),
+                new User("Иван", 25)
+        ));
+
+        SortUser sortUser = new SortUser();
+
+        List<User> resultUserList = sortUser.sortByAllFields(userList);
+
+        List<User> expectedUserList = new ArrayList<User>();
+        expectedUserList.addAll(Arrays.asList(
+                new User("Иван", 25),
+                new User("Иван", 30),
+                new User("Сергей", 20),
+                new User("Сергей", 25)
+        ));
+
+        assertThat(resultUserList, is(expectedUserList));
+
+    }
+
+    @Test
+    public void whenUserListSortedByNameThenGetUserListSortedByName() {
+
+        List<User> userList = new ArrayList<User>();
+        userList.addAll(Arrays.asList(
+                new User("Сергей", 25),
+                new User("Иван", 30),
+                new User("Сергей", 20),
+                new User("Иван", 25)
+        ));
+
+        SortUser sortUser = new SortUser();
+
+        List<User> resultUserList = sortUser.sortNameLength(userList);
+
+        List<User> expectedUserList = new ArrayList<User>();
+        expectedUserList.addAll(Arrays.asList(
+                new User("Иван", 30),
+                new User("Иван", 25),
+                new User("Сергей", 25),
+                new User("Сергей", 20)
+        ));
+
+        assertThat(resultUserList, is(expectedUserList));
+
+    }
 }

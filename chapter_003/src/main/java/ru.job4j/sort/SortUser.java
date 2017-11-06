@@ -1,9 +1,6 @@
 package ru.job4j.sort;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SortUser {
 
@@ -29,4 +26,60 @@ public class SortUser {
         return userTreeSet;
 //        }
     }
+
+//    2. Сортировка User с использованием Comparator [#10036]
+//    1) public List<User> sortNameLength (List<User>) - в этом методе необходимо определить
+//    Comparator для метода Collections.sort и отсортировать List<User> по длине имени.
+    public List<User> sortNameLength(List<User> userList) {
+        userList.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getName().length() > o2.getName().length()) {
+                    return 1;
+                } else if (o1.getName().length() < o2.getName().length()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        return  userList;
+    }
+
+//    2) public List<User> sortByAllFields (List<User>) - в этом методе необходимо определить Comparator для метода
+//    Collections.sort и отсортировать List<User> по 2-м полям, сначала проверка по имени, потом по возрасту.
+//    Например
+//
+//    Сергей, 25 (лет)
+//    Иван, 30
+//    Сергей, 20
+//    Иван, 25
+//
+//    должно отсортироваться в
+//    Иван 25
+//    Иван 30
+//    Сергей 20
+//    Сергей 25
+    public List<User> sortByAllFields(List<User> userList) {
+        userList.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getName().length() > o2.getName().length()) {
+                    return 1;
+                } else if (o1.getName().length() < o2.getName().length()) {
+                    return -1;
+                } else {
+                    if (o1.getAge() > o2.getAge()) {
+                        return 1;
+                    } else if (o1.getAge() < o2.getAge()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
+        return userList;
+    }
+
 }
