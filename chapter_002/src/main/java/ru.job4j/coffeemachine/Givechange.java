@@ -17,6 +17,10 @@ public class Givechange {
 
         int[] change = givechange.change(4800, 35);
 
+        int[] vaveChange = givechange.vaveChange(4800, 35);
+
+        int a = 0;
+
     }
 
     int[] change(int value, int price) {
@@ -68,6 +72,36 @@ public class Givechange {
             }
         }
         return result;
+    }
+
+    int[] vaveChange(int value, int price) {
+
+        int[] returnChange = new int[100];
+        int indChange = 0;
+
+        if (value < price) {
+            System.out.println("Not enough value");
+        }
+        else {
+            value = value - price;
+        }
+
+        int[] change = {1000, 500, 100, 50, 10, 5, 1};
+
+        int indNominal = 0;
+
+        while (value > 0) {
+                int nominal = change[indNominal];
+                if (value - nominal >= 0) {
+                    value = value - nominal;
+                    returnChange[indChange] = nominal;
+                    indChange++;
+                } else {
+                    indNominal++;
+                }
+        }
+
+        return returnChange;
     }
 }
 
