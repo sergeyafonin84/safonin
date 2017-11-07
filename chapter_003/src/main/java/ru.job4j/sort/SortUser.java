@@ -27,26 +27,27 @@ public class SortUser {
 //        }
     }
 
-//    2. Сортировка User с использованием Comparator [#10036]
+    //    2. Сортировка User с использованием Comparator [#10036]
 //    1) public List<User> sortNameLength (List<User>) - в этом методе необходимо определить
 //    Comparator для метода Collections.sort и отсортировать List<User> по длине имени.
     public List<User> sortNameLength(List<User> userList) {
         userList.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                if (o1.getName().length() > o2.getName().length()) {
-                    return 1;
-                } else if (o1.getName().length() < o2.getName().length()) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+//                if (o1.getName().length() > o2.getName().length()) {
+//                    return 1;
+//                } else if (o1.getName().length() < o2.getName().length()) {
+//                    return -1;
+//                } else {
+//                    return 0;
+//                }
+                return conditionForNameLength(o1, o2);
             }
         });
         return  userList;
     }
 
-//    2) public List<User> sortByAllFields (List<User>) - в этом методе необходимо определить Comparator для метода
+    //    2) public List<User> sortByAllFields (List<User>) - в этом методе необходимо определить Comparator для метода
 //    Collections.sort и отсортировать List<User> по 2-м полям, сначала проверка по имени, потом по возрасту.
 //    Например
 //
@@ -60,14 +61,19 @@ public class SortUser {
 //    Иван 30
 //    Сергей 20
 //    Сергей 25
+//в методе sortByAllFields() повторяющийся код. Вызывай метод sortNameLength()
     public List<User> sortByAllFields(List<User> userList) {
         userList.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                if (o1.getName().length() > o2.getName().length()) {
-                    return 1;
-                } else if (o1.getName().length() < o2.getName().length()) {
-                    return -1;
+//                if (o1.getName().length() > o2.getName().length()) {
+//                    return 1;
+//                } else if (o1.getName().length() < o2.getName().length()) {
+//                    return -1;
+                int conditionForNameLength = conditionForNameLength(o1, o2);
+
+                if (conditionForNameLength != 0) {
+                        return conditionForNameLength;
                 } else {
                     if (o1.getAge() > o2.getAge()) {
                         return 1;
@@ -81,5 +87,19 @@ public class SortUser {
         });
         return userList;
     }
+
+    int conditionForNameLength(User o1, User o2) {
+
+        if (o1.getName().length() > o2.getName().length()) {
+            return 1;
+        } else if (o1.getName().length() < o2.getName().length()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+
+
 
 }
