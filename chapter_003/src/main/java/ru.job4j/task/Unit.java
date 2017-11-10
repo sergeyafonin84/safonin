@@ -1,14 +1,21 @@
 package ru.job4j.task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Unit {
 
-    String name;
+    private String name;
 
-    String subName;
+    private List<String> decomposedName = new ArrayList<String>();
 
-    String subSubName;
+    public String getName() {
+        return name;
+    }
 
-    String divName;
+    public List<String> getDecomposedName() {
+        return decomposedName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -30,33 +37,16 @@ public class Unit {
     }
 
     public Unit(String name) {
-        this.name = name;
-
-        String nameForSplit = this.name.replace(
+        this.name = name;               String nameForSplit = this.name.replace(
                 new String("\\").toCharArray()[0],
-                    new String(";").toCharArray()[0]);
+                new String(";").toCharArray()[0]);
 
         String regex = new String(";");
 
         String[] arrayOfDivAndSubDiv = nameForSplit.split(regex);
 
         for (int ind = 0; ind < arrayOfDivAndSubDiv.length; ind++) {
-            if (ind == 0) {
-                this.divName = arrayOfDivAndSubDiv[ind];
-            } else if (ind == 1) {
-                this.subName = arrayOfDivAndSubDiv[ind];
-            } else if (ind == 2) {
-                this.subSubName = arrayOfDivAndSubDiv[ind];
-            }
+            decomposedName.add(arrayOfDivAndSubDiv[ind]);
         }
-
-        if (this.subName == null) {
-            this.subName = "zzzNoSubName";
-        }
-
-        if (this.subSubName == null) {
-            this.subSubName = "zzzNoSubSubName";
-        }
-
     }
 }

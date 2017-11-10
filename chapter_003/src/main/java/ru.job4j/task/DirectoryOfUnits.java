@@ -1,6 +1,7 @@
 package ru.job4j.task;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class DirectoryOfUnits {
@@ -24,40 +25,59 @@ public class DirectoryOfUnits {
             @Override
             public int compare(Unit o1, Unit o2) {
 
-                if (o1.divName.compareTo(o2.divName) > 0) {
-                    return -1;
-                } else if (o1.divName.compareTo(o2.divName) < 0) {
-                    return  1;
-                } else {
-                    if (o1.subName.compareTo(o2.subName) > 0) {
-                        return -1;
-                    } else if (o1.subName.compareTo(o2.subName) < 0) {
-                        return 1;
-                    } else {
+                List<String> o1DecomposedName = o1.getDecomposedName();
+                List<String> o2DecomposedName = o2.getDecomposedName();
 
-                        if (o1.subSubName.compareTo(o2.subSubName) > 0) {
-                            return -1;
-                        } else if (o1.subSubName.compareTo(o2.subSubName) < 0) {
-                            return 1;
+                Iterator o1DecomposedNameIterator = o1DecomposedName.listIterator();
+                Iterator o2DecomposedNameIterator = o2DecomposedName.listIterator();
+
+                int returnValue = 0;
+
+                while (o1DecomposedNameIterator.hasNext()) {
+
+                    if (o1DecomposedNameIterator.hasNext()) {
+
+                        if (!o2DecomposedNameIterator.hasNext()) {
+
+                            returnValue = 1;
+
+                            break;
+
                         } else {
-                            return 0;
+
+                            String o1SubName = (String) o1DecomposedNameIterator.next();
+                            String o2SubName = (String) o2DecomposedNameIterator.next();
+
+                            if (o1SubName.compareTo(o2SubName) > 0) {
+                                returnValue = -1;
+                                break;
+                            } else if (o1SubName.compareTo(o2SubName) < 0) {
+                                returnValue = 1;
+                                break;
+                            } else if (!o1DecomposedNameIterator.hasNext()) {
+                                returnValue = -1;
+                                break;
+                            } else {
+                                continue;
+                            }
                         }
+                    } else if (o2DecomposedNameIterator.hasNext()) {
+                        returnValue = -1;
                     }
                 }
+                return returnValue;
             };
         });
-
         return unitsList;
     }
 
     int sortUnitsByNameDescForComparator(Unit o1, Unit o2) {
-        if (o1.name.compareTo(o2.name) > 0) {
+        if (o1.getName().compareTo(o2.getName()) > 0) {
             return 1;
-        } else if (o1.name.compareTo(o2.name) < 0) {
+        } else if (o1.getName().compareTo(o2.getName()) < 0) {
             return -1;
         } else {
             return 0;
         }
     };
-
 }
