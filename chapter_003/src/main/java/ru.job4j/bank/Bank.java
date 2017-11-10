@@ -23,14 +23,14 @@ public class Bank {
     public void addAccountToUser(User user, Account account) {
         List<Account> userAccounts = this.getUserAccounts(user); //usersAccounts.get(user);
         userAccounts.add(account);
-        usersAccounts.put(user, userAccounts);
+        //usersAccounts.put(user, userAccounts); ЛИШНЕЕ ДЕЙСТВИЕ!!!
     }
 
 //    public void deleteAccountFromUser(User user, Account account) {} - удалить один счёт пользователя.
     public void deleteAccountFromUser(User user, Account account) {
         List<Account> userAccounts = this.getUserAccounts(user); //usersAccounts.get(user);
         userAccounts.remove(account);
-        usersAccounts.put(user, userAccounts);
+        //usersAccounts.put(user, userAccounts); ЛИШНЕЕ ДЕЙСТВИЕ!!!
     }
 
 //    public List<Accounts> getUserAccounts (User user) {} - получить список счетов для пользователя.
