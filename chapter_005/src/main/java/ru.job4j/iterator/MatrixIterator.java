@@ -6,27 +6,38 @@ import java.util.NoSuchElementException;
 public class MatrixIterator implements Iterator {
 
     private final int[][] values;
-    private int index = 0;
-    private int maxIndex = 0;
+    private int indexX = 0;
+    private int indexY = 0;
 
     public MatrixIterator(int[][] values) {
 
-        int maxIndex = 0;
-
         this.values = values;
 
-        for (int i = 0; i < values.length; i++) {
-            for (int k = 0; k < values[i].length; k++) {
-                maxIndex = maxIndex + 1;
-            }
-        }
-
-        this.maxIndex = maxIndex;
     }
 
     @Override
     public boolean hasNext() {
-        return maxIndex > index;
+
+        return   nextX() || nextY();
+
+    }
+
+    boolean nextX() {
+
+        return values.length > indexX;
+
+    }
+
+    boolean nextY() {
+
+        int indX = indexX;
+
+        if (!nextX()) {
+            --indX;
+        }
+
+        return values[indX].length > indexY;
+
     }
 
     @Override
@@ -36,32 +47,22 @@ public class MatrixIterator implements Iterator {
                 throw new NoSuchElementException();
         }
 
-        int currentIndex = 0;
-        int i = 0;
-        int k = 0;
+        if (nextY()) {
 
-        for (i = 0; i < values.length;) {
+            if (indexY + 1 == values[indexX].length) {
 
-            for (k = 0; k < values[i].length - 1; k++) {
+                return values[indexX++][indexY++];
 
-                if (currentIndex == index) {
-
-                    break;
-                }
-
-                currentIndex++;
-            }
-
-            if (currentIndex != index) {
-                i++;
-                k = -1;
-                currentIndex++;
             } else {
-                break;
-            }
-        }
 
-        index++;
-        return values[i][k];
+                return values[indexX][indexY++];
+            }
+
+        } else {
+
+            indexY = 0;
+
+            return values[indexX][indexY++];
+        }
     }
 }
