@@ -25,45 +25,31 @@ public class DirectoryOfUnits {
             @Override
             public int compare(Unit o1, Unit o2) {
 
-                List<String> o1DecomposedName = o1.getDecomposedName();
-                List<String> o2DecomposedName = o2.getDecomposedName();
+                List<String> leftDecomposedName = o1.getDecomposedName();
+                List<String> rightDecomposedName = o2.getDecomposedName();
 
-                Iterator o1DecomposedNameIterator = o1DecomposedName.listIterator();
-                Iterator o2DecomposedNameIterator = o2DecomposedName.listIterator();
+                Iterator leftIterator = leftDecomposedName.listIterator();
+                Iterator rightIterator = rightDecomposedName.listIterator();
 
                 int returnValue = 0;
 
-                while (o1DecomposedNameIterator.hasNext()) {
+                while (leftIterator.hasNext() && rightIterator.hasNext()) {
 
-                    if (o1DecomposedNameIterator.hasNext()) {
+                            String LeftSubName = (String) leftIterator.next();
+                            String rightSubName = (String) rightIterator.next();
 
-                        if (!o2DecomposedNameIterator.hasNext()) {
-
-                            returnValue = 1;
-
-                            break;
-
-                        } else {
-
-                            String o1SubName = (String) o1DecomposedNameIterator.next();
-                            String o2SubName = (String) o2DecomposedNameIterator.next();
-
-                            if (o1SubName.compareTo(o2SubName) > 0) {
+                            if (LeftSubName.compareTo(rightSubName) > 0) {
                                 returnValue = -1;
                                 break;
-                            } else if (o1SubName.compareTo(o2SubName) < 0) {
+                            } else if (LeftSubName.compareTo(rightSubName) < 0) {
                                 returnValue = 1;
                                 break;
-                            } else if (!o1DecomposedNameIterator.hasNext()) {
+                            } else if (!leftIterator.hasNext()) {
                                 returnValue = -1;
                                 break;
                             } else {
                                 continue;
                             }
-                        }
-                    } else if (o2DecomposedNameIterator.hasNext()) {
-                        returnValue = -1;
-                    }
                 }
                 return returnValue;
             };
