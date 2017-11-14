@@ -1,0 +1,70 @@
+package ru.job4j.generic;
+
+//import com.sun.org.apache.xpath.internal.operations.String;
+//import org.junit.Before;
+import org.junit.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+//import ru.job4j.generic.SimpleList;
+import java.lang.String;
+
+
+//import java.lang.*;
+
+public class SimpleListTest {
+
+    public class A { }
+    public class B extends A { }
+    public class C extends B { }
+
+    @Test
+    public void whenCreateContainerShouldReturnTheSameType() {
+//        SimpleList<String> simple = new SimpleList<String>(4);
+        SimpleList simple = new Stack(4);
+
+        simple.add("test");
+        String result = (String) simple.get(0);
+
+        assertThat(result, is("test"));
+    }
+
+    @Test
+    public void whenTypeIntShouldReturnInt() {
+//        SimpleList<Integer> simple = new SimpleList<Integer>(4);
+        SimpleList simple = new Stack(4);
+        simple.add(2);
+        int result = (int) simple.get(0);
+
+        assertThat(result, is(2));
+    }
+
+//    public void wildTest() {
+////        SimpleList<B> list = new SimpleList<>(10);
+////        SimpleList<? super A> list = new SimpleList<>(10);
+//        SimpleList<? extends B> list = new SimpleList<>(10);
+//        list.add(new A());
+//        list.add(new B());
+//        list.add(new C());
+//        print(list);
+//
+//        printUpper(list);
+//
+//        printLower(list);
+//
+//    }
+//
+//    public void print(SimpleList<?> list) {
+//        //todo print
+//    }
+//
+//    public void printUpper(SimpleList<? extends B> list) {
+//
+//    }
+//
+//    public void printLower(SimpleList<? super B> list) {
+//
+//    }
+
+}
