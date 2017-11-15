@@ -71,4 +71,27 @@ public class SimpleArray<T> {
         objects[--index] = null; // clear to let GC do its work
     }
 
+    public int indexOf(Object o) {
+        if (o == null) {
+            for (int i = 0; i < index; i++) {
+                if (objects[i] == null) {
+                    return i;
+                }
+            }
+
+
+        } else {
+            for (int i = 0; i < index; i++) {
+                if (o.equals(objects[i])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    public int size() {
+        return index;
+    }
+
 }
