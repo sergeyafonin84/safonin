@@ -9,6 +9,9 @@ import static org.hamcrest.Matchers.is;
 
 //import ru.job4j.generic.SimpleList;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 //import java.lang.*;
@@ -38,6 +41,12 @@ public class SimpleListTest {
         int result = (int) simple.get(0);
 
         assertThat(result, is(2));
+    }
+
+    public  void  showList() {
+        List<String> list = new ArrayList<>(100);
+        List<? super Integer> numbers = new LinkedList<>();
+        numbers.add(1);
     }
 
 //    public void wildTest() {
