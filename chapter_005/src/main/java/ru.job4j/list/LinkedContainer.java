@@ -32,7 +32,7 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
         size++;
     }
 
-    private static class Node<E> {
+    protected static class Node<E> {
         E item;
         Node<E> next;
         Node<E> prev;
@@ -133,5 +133,59 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
 
     private boolean isPositionIndex(int index) {
         return index >= 0 && index <= size;
+    }
+
+    protected E unlinkFirst(Node<E> f) {
+        // assert f == first && f != null;
+        final E element = f.item;
+        final Node<E> next = f.next;
+        f.item = null;
+        f.next = null; // help GC
+        first = next;
+        if (next == null) {
+            last = null;
+        } else {
+            next.prev = null;
+        }
+
+        size--;
+//        modCount++;
+        return element;
+    }
+
+    public void addFirst(E e) {
+        linkFirst(e);
+    }
+
+    private void linkFirst(E e) {
+        final Node<E> f = first;
+        final Node<E> newNode = new Node<>(null, e, f);
+        first = newNode;
+        if (f == null) {
+            last = newNode;
+        } else {
+            f.prev = newNode;
+        }
+
+        size++;
+//        modCount++;
+    }
+
+    protected E unlinkLast(Node<E> l) {
+        // assert l == last && l != null;
+        final E element = l.item;
+        final Node<E> prev = l.prev;
+        l.item = null;
+        l.prev = null; // help GC
+        last = prev;
+        if (prev == null) {
+            first = null;
+        } else {
+            prev.next = null;
+        }
+
+        size--;
+//        modCount++;
+        return element;
     }
 }
