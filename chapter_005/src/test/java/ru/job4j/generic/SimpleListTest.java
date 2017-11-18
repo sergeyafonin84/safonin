@@ -9,9 +9,7 @@ import static org.hamcrest.Matchers.is;
 
 //import ru.job4j.generic.SimpleList;
 import java.lang.String;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 //import java.lang.*;
@@ -47,6 +45,24 @@ public class SimpleListTest {
         List<String> list = new ArrayList<>(100);
         List<? super Integer> numbers = new LinkedList<>();
         numbers.add(1);
+    }
+
+    @Test
+    public void showSet() {
+//        Set<String> set = new HashSet<>();
+//        Set<String> set = new TreeSet<>();
+        Set<String> set = new LinkedHashSet<>();
+        set.add("first");
+        set.add("second");
+        set.add("zero");
+        set.add("zero");
+        set.add("third");
+        for (String value : set) {
+            System.out.println(value.hashCode());
+            System.out.println(value);
+        }
+//        System.out.println(set);
+
     }
 
 //    public void wildTest() {
