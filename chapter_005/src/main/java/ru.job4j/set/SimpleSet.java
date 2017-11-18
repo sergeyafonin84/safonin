@@ -18,7 +18,7 @@ public class SimpleSet<E> implements Iterable<E> {
         return size;
     }
 
-    void add(E e){
+    void add(E e) {
 
         if (!suchAnElementAlreadyExists(e)) {
 
