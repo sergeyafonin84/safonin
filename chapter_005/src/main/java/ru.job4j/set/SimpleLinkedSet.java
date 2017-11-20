@@ -6,6 +6,12 @@ import java.util.Iterator;
 //        Коллекция должна обеспечивать void add(E e) и реализовывать Iterator<E>.
 //        Коллекция не должна хранить дубликаты.
 //        Set - внутри для хранения данных использует связный список.
+
+//WORK ON BUGS
+//аналогично java.util.Iterator.SimpleSet
+//        1) suchAnElementAlreadyExists  - упростите
+//        2) метод next можно написать проще
+
 public class SimpleLinkedSet<T> implements Iterable<T> {
 
     Node<T> firstInList;
@@ -33,22 +39,44 @@ public class SimpleLinkedSet<T> implements Iterable<T> {
         }
     }
 
+//    boolean suchAnElementAlreadyExists(T t) {
+//
+//        boolean returnValue = false;
+//
+//        Iterator<T> it = this.iterator();
+//
+//        while (it.hasNext()) {
+//
+//            T currElement = it.next();
+//
+//            if (currElement.equals(t)) {
+//
+//                returnValue = true;
+//
+//                break;
+//
+//            }
+//        }
+//        return returnValue;
+//    }
+
     boolean suchAnElementAlreadyExists(T t) {
 
         boolean returnValue = false;
 
-        Iterator<T> it = this.iterator();
+        Node<T> currNode = firstInList;
 
-        while (it.hasNext()) {
+        while (currNode != null && currNode.next != firstInList) {
 
-            T currElement = it.next();
-
-            if (currElement.equals(t)) {
+            if (currNode.value.equals(t)) {
 
                 returnValue = true;
 
                 break;
 
+            } else {
+
+                currNode = currNode.next;
             }
         }
         return returnValue;
@@ -71,28 +99,48 @@ public class SimpleLinkedSet<T> implements Iterable<T> {
         }
 
 
+//        @Override
+//        public T next() {
+//
+//            T returnValue = null;
+//
+//            if (!hasNext()) {
+//                new Exception("no such element!!! ");
+//            } else {
+//
+//                if (itrLastNode == null) {
+//                    returnValue = firstInList.value;
+//                    itrLastNode = firstInList;
+//
+//                } else {
+//                    Node<T> nextNode = itrLastNode.next;
+//                    returnValue = nextNode.value;
+//                    itrLastNode = nextNode;
+//
+//                }
+//            }
+//
+//            itrIndex++;
+//            return returnValue;
+//        }
+
         @Override
         public T next() {
 
             T returnValue = null;
 
             if (!hasNext()) {
+
                 new Exception("no such element!!! ");
+
             } else {
 
-                if (itrLastNode == null) {
-                    returnValue = firstInList.value;
-                    itrLastNode = firstInList;
-
-                } else {
-                    Node<T> nextNode = itrLastNode.next;
-                    returnValue = nextNode.value;
-                    itrLastNode = nextNode;
-
-                }
+                itrLastNode = itrLastNode == null ? firstInList : itrLastNode.next;
+                returnValue = itrLastNode.value;
             }
 
             itrIndex++;
+
             return returnValue;
         }
     }
