@@ -58,12 +58,14 @@ public class DirectoryOfUnits {
     }
 
     int sortUnitsByNameDescForComparator(Unit o1, Unit o2) {
-        if (o1.getName().compareTo(o2.getName()) > 0) {
-            return 1;
-        } else if (o1.getName().compareTo(o2.getName()) < 0) {
-            return -1;
-        } else {
-            return 0;
-        }
+//        вот тут можно упростить
+//        if (o1.getName().compareTo(o2.getName()) > 0) {
+//            return 1;
+//        } else if (o1.getName().compareTo(o2.getName()) < 0) {
+//            return -1;
+//        } else {
+//            return 0;
+//        }
+        return o1.getName().compareTo(o2.getName());
     };
 }
