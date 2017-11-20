@@ -8,62 +8,44 @@ import java.util.NoSuchElementException;
 public class Container<E> implements SimpleContainer<E> {
 
     //Внутри контейнера должен быть массив Object[] container;
-    Object[] container;
-
     private int size;
 
+    private int currentMaxSize = 1;
 
-//    Контейнер должен быть динамический. То есть метод add(E value) - может принимать бесконечное количество элементов.
+    Object[] container = new Object[currentMaxSize];
+
+    //    Контейнер должен быть динамический. То есть метод add(E value) - может принимать бесконечное количество элементов.
     @Override
     public void add(E value) {
 
-        Object[] newContainer = new Object[size + 1];
+        if ((size + 1) > currentMaxSize) {
 
-        Iterator<E> it = this.iterator();
+            currentMaxSize = currentMaxSize * 2;
+            Object[] newContainer = new Object[currentMaxSize];
 
-        int ind = 0;
-
-        if (size != 0) {
-
-            while (it.hasNext()) {
-
-                newContainer[ind] = it.next();
-
-                ind++;
+            for (int ind = 0; ind < container.length; ind++) {
+                newContainer[ind] = container[ind];
             }
+
+            container = newContainer;
+
         }
-        newContainer[ind] = value;
 
-        container = newContainer;
-
+        container[size] = value;
         size++;
-
     }
 
     @Override
     public E get(int index) {
 
-        int ind = 0;
-
         E returnValue = null;
 
-        Iterator<E> it = this.iterator();
-
-        while (it.hasNext()) {
-
-            E currElem = it.next();
-
-            if (ind == index) {
-                returnValue = currElem;
-                break;
-            }
-
-            ind++;
+        if (index < size) {
+            returnValue = (E) container[index];
         }
 
         return returnValue;
     }
-
 
     @Override
     public Iterator<E> iterator() {
