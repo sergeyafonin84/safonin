@@ -78,4 +78,28 @@ public class UserStoreTest {
 
     }
 
+    @Test
+    public void whenDeleteFromRoleStoreThenTheElementDeletedFromRoleStore() {
+
+        RoleStore roleStore = new RoleStore(4);
+
+        Role role1 = new Role("1234");
+        Role role2 = new Role("2222");
+
+
+        roleStore.add(role1);
+        roleStore.add(role2);
+
+        String role2Id = role2.getId();
+
+        roleStore.delete(role2Id);
+
+        Role result = (Role) roleStore.findByBaseObjectsInternalId(role2Id);
+
+        Role expected = null;
+
+        assertThat(result, is(expected));
+
+    }
+
 }

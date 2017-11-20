@@ -3,20 +3,25 @@ package ru.job4j.generic;
 //4. После реализации проверьте можно ли избавиться от дублирования кода в вашем проекте.
 // UserStore и RoleStore будут иметь один и тот же функционал.
 // Общий для них функционал необходимо вынести в абстрактный класс AbstractStore.
-public abstract class AbstractStore implements Store {
+public abstract class AbstractStore<T extends Base> implements Store<T> {
 
-    private SimpleArray<Base> elements;
+    private SimpleArray<T> elements;
 
     public AbstractStore(int numberOfElements) {
-        this.elements = new SimpleArray<>(numberOfElements);
+        this.elements = new SimpleArray<T>(numberOfElements);
     }
+
+//    @Override
+//    public Base add(Base model) {
+//        return null;
+//    }
 
     @Override
     public Base add(Base model) {
 
-        elements.add(model);
+        elements.add((T) model);
 
-        return model;
+        return (Base) model;
 
     }
 
@@ -26,9 +31,9 @@ public abstract class AbstractStore implements Store {
     @Override
     public Base update(Base model) {
 
-        Base baseForUpdate =  findByBaseObjectsInternalId(model.getId());
+        T baseForUpdate =  findByBaseObjectsInternalId(model.getId());
 
-        elements.update(elements.indexOf(baseForUpdate), model);
+        elements.update(elements.indexOf(baseForUpdate), (T) model);
 
         return model;
     }
@@ -38,24 +43,24 @@ public abstract class AbstractStore implements Store {
 
         boolean returnValue = false;
 
-        Base baseForDelete = this.findByBaseObjectsInternalId(id);
+        T baseForDelete = (T) this.findByBaseObjectsInternalId(id);
 
         if (baseForDelete != null) {
-            Base oldValue = elements.delete(elements.indexOf(baseForDelete));
+            T oldValue = elements.delete(elements.indexOf(baseForDelete));
             returnValue = true;
         }
 
         return returnValue;
     }
 
-    public Base findByBaseObjectsInternalId(String id) {
+    public T findByBaseObjectsInternalId(String id) {
 
-        Base returnValue = null;
+        T returnValue = null;
 
         for (int ind = 0; ind < elements.size(); ind++) {
             Base currElement = (Base) elements.get(ind);
             if (currElement.getId() == id) {
-                returnValue = currElement;
+                returnValue = (T) currElement;
             }
         }
         return returnValue;

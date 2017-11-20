@@ -2,8 +2,18 @@ package ru.job4j.generic;
 
 public abstract class Base {
 
-    abstract String getId();
+    private String id;
 
-    abstract void setId(String id);
+    public Base(String id) {
+        this.id = id;
+    }
+
+    String getId() {
+        return this.id;
+    }
+
+    void setId(String id) {
+        this.id = id;
+    }
 
 }
