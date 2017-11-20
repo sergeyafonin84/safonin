@@ -7,10 +7,19 @@ import java.util.NoSuchElementException;
 //Реализовать коллекцию SimpleSet. Коллекция должна обеспечивать void add(E e) и реализовывать Iterator<E>.
 //        Коллекция не должна хранить дубликаты.
 //        Set - внутри для хранения данных использует обычные массивы.
+
+//нужно поправить:
+//
+//        1) каждый раз создавать новый массив с копированием элементов из предыдущего при добавлении одного элемента - это слишком накладно.
+//        2) упростите код метода suchAnElementAlreadyExists. Зачем использовать итератор явно, пробегайтесь по массиву в цикле foreach.
 public class SimpleSet<E> implements Iterable<E> {
 
 
-    Object[] container;
+//    Object[] container;
+
+    private int currentMaxSize = 1;
+
+    Object[] container = new Object[currentMaxSize];
 
     private int size;
 
@@ -18,53 +27,94 @@ public class SimpleSet<E> implements Iterable<E> {
         return size;
     }
 
-    void add(E e) {
+//    void add(E e) {
+//
+//        if (!suchAnElementAlreadyExists(e)) {
+//
+//            Object[] newContainer = new Object[size + 1];
+//
+//            Iterator<E> it = this.iterator();
+//
+//            int ind = 0;
+//
+//            if (size != 0) {
+//
+//                while (it.hasNext()) {
+//
+//                    newContainer[ind] = it.next();
+//
+//                    ind++;
+//                }
+//            }
+//            newContainer[ind] = e;
+//
+//            container = newContainer;
+//
+//            size++;
+//
+//        }
+//
+//    }
 
-        if (!suchAnElementAlreadyExists(e)) {
+    void add(E value) {
 
-            Object[] newContainer = new Object[size + 1];
+        if (!suchAnElementAlreadyExists(value)) {
 
-            Iterator<E> it = this.iterator();
+            if ((size + 1) > currentMaxSize) {
 
-            int ind = 0;
+                currentMaxSize = currentMaxSize * 2;
+                Object[] newContainer = new Object[currentMaxSize];
 
-            if (size != 0) {
-
-                while (it.hasNext()) {
-
-                    newContainer[ind] = it.next();
-
-                    ind++;
+                for (int ind = 0; ind < container.length; ind++) {
+                    newContainer[ind] = container[ind];
                 }
+
+                container = newContainer;
+
             }
-            newContainer[ind] = e;
 
-            container = newContainer;
-
+            container[size] = value;
             size++;
-
         }
-
     }
+
+    //    boolean suchAnElementAlreadyExists(E e) {
+//
+//        boolean returnValue = false;
+//
+//        Iterator<E> it = this.iterator();
+//
+//        while (it.hasNext()) {
+//
+//            E currElement = it.next();
+//
+//            if (currElement.equals(e)) {
+//
+//                returnValue = true;
+//
+//                break;
+//
+//            }
+//        }
+//        return returnValue;
+//    }
 
     boolean suchAnElementAlreadyExists(E e) {
 
         boolean returnValue = false;
 
-        Iterator<E> it = this.iterator();
+        for (Object currElement: container) {
 
-        while (it.hasNext()) {
-
-            E currElement = it.next();
-
-            if (currElement.equals(e)) {
+            if (currElement != null && ((E) currElement).equals((E) e)) {
 
                 returnValue = true;
 
                 break;
 
             }
+
         }
+
         return returnValue;
     }
 
