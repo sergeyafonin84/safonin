@@ -9,7 +9,9 @@ public class LinkedListTask<T> implements Iterable<T> {
     int sizeOfList = 0;
     Node<T> lastInList;
 
-    public LinkedListTask() {
+    Node<T> itrLastNode;
+
+    public boolean testHasCycle(boolean hasCycleFastAndSlobNodesMethod) {
 
         Node first = new Node(1);
         this.firstInList = first;
@@ -25,6 +27,17 @@ public class LinkedListTask<T> implements Iterable<T> {
 
         sizeOfList = 4;
 
+        Node<T> firsNodeForTest = four;
+
+        if (hasCycleFastAndSlobNodesMethod) {
+
+            return hasCycleFastAndSlobNodesMethod(firsNodeForTest);
+
+        } else {
+
+            return hasCycle(firsNodeForTest);
+
+        }
     }
 
     public void add(T value) {
@@ -46,7 +59,7 @@ public class LinkedListTask<T> implements Iterable<T> {
 
     class Itr implements Iterator<T> {
 
-        Node<T> itrLastNode;
+//        Node<T> itrLastNode;
 
         int itrIndex = 0;
 
@@ -58,6 +71,8 @@ public class LinkedListTask<T> implements Iterable<T> {
 
         @Override
         public T next() {
+
+
 
             T returnValue = null;
 
@@ -99,13 +114,17 @@ public class LinkedListTask<T> implements Iterable<T> {
 // Определение зацикленности необходимо реализовать путем прохода по узлам, без использования коллекций.
 //    boolean hasCycle(Node first) {
 
-    boolean hasCycle() {
+//    измените код чтобы можно было передавать первый узел, и уже от него производился поиск.
+//    Рекомендую к просмотру вот это видео: cycle detection
+    boolean hasCycle(Node first) {
 
         boolean returnValue = false;
 
+        firstInList = first;
+
         Iterator<T> it = this.iterator();
         int numberOfIterations = 0;
-        Node<T> firsCurrNode = firstInList;
+        Node<T> firsCurrNode = first; //firstInList;
         while (it.hasNext()) {
 
             if (returnValue) {
@@ -114,7 +133,7 @@ public class LinkedListTask<T> implements Iterable<T> {
 
             Iterator<T> it2 = this.iterator();
             int numberOfIterations2 = 0;
-            Node<T> secondCurrNode = firstInList;
+            Node<T> secondCurrNode = first; //firstInList;
             while (it2.hasNext()) {
 
                 if (returnValue) {
@@ -141,5 +160,28 @@ public class LinkedListTask<T> implements Iterable<T> {
 
         return returnValue;
 
+    }
+
+    boolean hasCycleFastAndSlobNodesMethod(Node<T> head) {
+
+        if (head == null) {
+            return false;
+        }
+
+        Node<T> fast = head.next;
+        Node<T> slow = head;
+
+        while (fast != null && fast.next != null && slow != null) {
+
+            if (fast == slow) {
+                return true;
+            }
+
+            fast = fast.next.next;
+            slow = slow.next;
+
+        }
+
+        return false;
     }
 }

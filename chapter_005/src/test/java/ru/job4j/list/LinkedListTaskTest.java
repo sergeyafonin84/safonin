@@ -12,9 +12,13 @@ public class LinkedListTaskTest {
 
         LinkedListTask linkedListTask = new LinkedListTask();
 
-        boolean result = linkedListTask.hasCycle();
+        boolean result = linkedListTask.testHasCycle(false);
 
         boolean expected = true;
+
+        assertThat(result, is(expected));
+
+        boolean resultNewMethodHasCycleFastAndSlobNodesMethod = linkedListTask.testHasCycle(true);
 
         assertThat(result, is(expected));
 
