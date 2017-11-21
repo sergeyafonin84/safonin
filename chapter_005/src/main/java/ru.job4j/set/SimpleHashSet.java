@@ -15,95 +15,204 @@ import java.util.NoSuchElementException;
 //        4) Алгоритмы и структуры данных. - Н. Вирт
 //
 //        Разрешение коллизий реализовывать не надо.
-public class SimpleHashSet<E> implements Iterable<E>  {
-    Object[] container;
+public class SimpleHashSet<T> implements Iterable<T>  {
 
-    private int size;
+    Node<T> firstInList;
+    int sizeOfList = 0;
+    Node<T> lastInList;
 
-    public int getSize() {
-        return size;
-    }
+    private final static int TABLE_SIZE = 128;
 
-    void add(E e) {
+    Node<T>[] tableHashTable;
 
-        if (!suchAnElementAlreadyExists(e)) {
-
-            Object[] newContainer = new Object[size + 1];
-
-            Iterator<E> it = this.iterator();
-
-            int ind = 0;
-
-            if (size != 0) {
-
-                while (it.hasNext()) {
-
-                    newContainer[ind] = it.next();
-
-                    ind++;
-                }
-            }
-            newContainer[ind] = e;
-
-            container = newContainer;
-
-            size++;
-
+    public SimpleHashSet() {
+        tableHashTable = new Node[TABLE_SIZE];
+        for (int i = 0; i < TABLE_SIZE; i++) {
+            tableHashTable[i] = null;
         }
 
     }
 
-    boolean suchAnElementAlreadyExists(E e) {
+    public int getSize() {
+        return sizeOfList;
+    }
+
+    //1) boolean add (E e)
+    public boolean add(T value) {
+
+        if (!suchAnElementAlreadyExists(value)) {
+
+            Node<T> newNode = new Node<T>(value);
+            if (this.firstInList == null) {
+                this.firstInList = newNode;
+                this.lastInList = newNode;
+            } else {
+                this.lastInList.next = newNode;
+                this.lastInList = newNode;
+            }
+            sizeOfList++;
+
+            int hash = getHashByValue(value);
+
+            tableHashTable[hash] = newNode;
+
+            return true;
+
+        }
+
+        return false;
+    }
+
+//    2) boolean contains (E e)
+    public  boolean contains(T value) {
+
+        int hash = getHashByValue(value);
+
+        return  !(tableHashTable[hash] == null);
+
+    }
+
+//    3) boolean remove (E e)
+    public boolean remove(T value) {
 
         boolean returnValue = false;
 
-        Iterator<E> it = this.iterator();
+        if (!this.contains(value)) {
+            returnValue = false;
+        } else  {
 
-        while (it.hasNext()) {
+            int hash = getHashByValue(value);
 
-            E currElement = it.next();
+            Node<T> nodeForRemove = tableHashTable[hash];
 
-            if (currElement.equals(e)) {
+            if (nodeUnlink(nodeForRemove)) {
+
+                tableHashTable[hash] = null;
+
+                returnValue = true;
+            }
+
+        }
+
+        return returnValue;
+    }
+
+    public boolean nodeUnlink(Node<T> node) {
+
+        Node<T> nextNode = node.next;
+
+        Node<T> prevNode = findPreviosNode(node);
+
+        if (prevNode != null) {
+            prevNode.next = nextNode;
+
+            node.next = null;
+            node.value = null;
+
+            this.sizeOfList--;
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Node<T> findPreviosNode(Node<T> node) {
+
+        Node<T> currNode = firstInList;
+
+        while (currNode != null && currNode.next != firstInList) {
+            if (currNode.next.equals(node)) {
+                return currNode;
+            }
+        }
+
+        return null;
+
+    }
+
+    int getHashByValue(T value) {
+
+        int hash = (value.hashCode() % TABLE_SIZE);
+
+        while (tableHashTable[hash] != null && tableHashTable[hash].value.hashCode() % TABLE_SIZE != hash) {
+
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+
+        return hash;
+
+    }
+
+    boolean suchAnElementAlreadyExists(T t) {
+
+        boolean returnValue = false;
+
+        Node<T> currNode = firstInList;
+
+        while (currNode != null && currNode.next != firstInList) {
+
+            if (currNode.value.equals(t)) {
 
                 returnValue = true;
 
                 break;
 
+            } else {
+
+                currNode = currNode.next;
             }
         }
         return returnValue;
     }
 
     @Override
-    public Iterator<E> iterator() {
-
+    public Iterator<T> iterator() {
         return new Itr();
-
     }
 
-    private class Itr implements Iterator<E> {
+    class Itr implements Iterator<T> {
 
-        int cursor = 0;
+        Node<T> itrLastNode;
+
+        int itrIndex = 0;
 
         @Override
         public boolean hasNext() {
-
-            return cursor < size;
-
+            return itrIndex < sizeOfList;
         }
 
+
         @Override
-        public E next() {
+        public T next() {
 
-            if (!this.hasNext()) {
+            T returnValue = null;
 
-                throw  new NoSuchElementException();
+            if (!hasNext()) {
+
+                new Exception("no such element!!! ");
 
             } else {
 
-                return (E) container[cursor++];
-
+                itrLastNode = itrLastNode == null ? firstInList : itrLastNode.next;
+                returnValue = itrLastNode.value;
             }
+
+            itrIndex++;
+
+            return returnValue;
         }
     }
+
+    public class Node<T> {
+        T value;
+
+        Node<T> next;
+
+        public Node(T value) {
+            this.value = value;
+        }
+    }
+
+
 }
