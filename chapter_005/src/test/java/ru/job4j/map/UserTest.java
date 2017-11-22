@@ -10,6 +10,8 @@ import java.util.TreeMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import java.util.Calendar;
+
 //Создать два объекта User, которые имеют одинаковые поля.
 //        Создать карту Map<User, Object>
 //        Добавить два объекта. Вывести карту на печать. Описать полученный результат словами.
@@ -18,10 +20,10 @@ public class UserTest {
     @Test
     public void map() {
 
-        User first = new User("Serg", 1, new Calendar("12/09/84"));
+        User first = new User("Serg", 1, Calendar.getInstance());
 
 
-        User second = new User("Serg", 1, new Calendar("12/09/84"));
+        User second = new User("Serg", 1, Calendar.getInstance());
 
         Map<User, Object> map = new HashMap<>();
 
