@@ -12,6 +12,7 @@ public class SimpleHashSetTest {
         SimpleHashSet simpleHashSet = new SimpleHashSet();
         simpleHashSet.add(1);
         simpleHashSet.add(2);
+        simpleHashSet.add(2);
         simpleHashSet.add(3);
 
         boolean result = simpleHashSet.contains(2);

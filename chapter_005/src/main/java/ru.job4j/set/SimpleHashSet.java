@@ -144,26 +144,34 @@ public class SimpleHashSet<T> implements Iterable<T>  {
 
     }
 
+
+//  WORK ON BUGS    смысл кеш структур убил.if (!suchAnElementAlreadyExists(value)) { ты делаешь поиск по всем элементам. а тут надо просто вычислить ячейку и проверить пустая она или нет.
     boolean suchAnElementAlreadyExists(T t) {
 
-        boolean returnValue = false;
+//        boolean returnValue = false;
 
-        Node<T> currNode = firstInList;
+//        Node<T> currNode = firstInList;
+//
+//        while (currNode != null && currNode.next != firstInList) {
+//
+//            if (currNode.value.equals(t)) {
+//
+//                returnValue = true;
+//
+//                break;
+//
+//            } else {
+//
+//                currNode = currNode.next;
+//            }
+//        }
 
-        while (currNode != null && currNode.next != firstInList) {
+//        int hash = getHashByValue(t);
 
-            if (currNode.value.equals(t)) {
+//        return returnValue;
 
-                returnValue = true;
+        return tableHashTable[getHashByValue(t)] != null;
 
-                break;
-
-            } else {
-
-                currNode = currNode.next;
-            }
-        }
-        return returnValue;
     }
 
     @Override
