@@ -29,10 +29,11 @@ public class UserTest {
 
         Map<User, Object> map = new HashMap<>();
 
-        map.put(first, "serg");
-        map.put(second, "serg");
+        map.put(first, "first");
+        map.put(second, "second");
 
         System.out.println(map);
+        System.out.println(map.get(first));
 
     }
 }
