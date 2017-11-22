@@ -20,10 +20,12 @@ public class UserTest {
     @Test
     public void map() {
 
-        User first = new User("Serg", 1, Calendar.getInstance());
+        Calendar calendar = Calendar.getInstance();
+
+        User first = new User("Serg", 1, calendar);
 
 
-        User second = new User("Serg", 1, Calendar.getInstance());
+        User second = new User("Serg", 1, calendar);
 
         Map<User, Object> map = new HashMap<>();
 
