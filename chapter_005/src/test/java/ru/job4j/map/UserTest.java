@@ -2,15 +2,10 @@ package ru.job4j.map;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import java.util.Calendar;
 
 //Создать два объекта User, которые имеют одинаковые поля.
 //        Создать карту Map<User, Object>
@@ -34,6 +29,23 @@ public class UserTest {
 
         System.out.println(map);
         System.out.println(map.get(first));
+
+    }
+
+    @Test
+    public void hashcodeForDifferentTypes() {
+
+        Integer k = 55;
+        System.out.println(k.hashCode());
+        String str = "l";
+        System.out.println(str.hashCode());
+
+        Calendar calendar = Calendar.getInstance();
+
+        User first = new User("Serg", 1, calendar);
+
+        System.out.println(first.hashCode());
+        System.out.println(Objects.hash(first.name, first.children, first.birthday));
 
     }
 }
