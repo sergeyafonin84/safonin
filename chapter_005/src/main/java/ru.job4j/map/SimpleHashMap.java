@@ -8,6 +8,13 @@ package ru.job4j.map;
 //        Реализовывать итератор.
 //        Внутренняя реализация должна использовать массив. Нужно обеспечить фиксированное время вставки и получение. Предусмотрите возможность роста хэш-таблицы при нехватке места для нового элемента.
 
+//WORK ON BUGS
+//Сергей, обратите внимание что вычисление индекса через поразрядное И эквивалентно, оператору деления по модулю,
+//        только в том случае если, делитель является степенью двойки. В текущем варианте ваша реализация генерирует
+//        большое число коллизий. Поэтому приведите размер массива к степени двойки и в дальнейшем при увеличении всегда его поддерживайте.
+//        Либо используйте оператор деления по модулю. Кроме того, увеличивать хэш-таблицу умножая размер на 31, это расточительно.
+//        Увеличивайте на степень двойки и поддерживайте loadFactor тогда.
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -15,10 +22,13 @@ import java.util.Objects;
 //        Методы разрешения коллизий реализовывать не надо. Например: если при добавлении ключ уже есть, то возвращать false.
 public class SimpleHashMap<K, V> implements Iterable<K>{
 
-    int sizeOfTable = 1;
-    int size = 0;
+    private int sizeOfTable = 1;
+    private int size = 0;
 
-    Node<K, V>[] table;
+    final float loadfactor = 0.5f;
+
+
+    private Node<K, V>[] table;
 
     @Override
     public Iterator iterator() {
@@ -90,7 +100,7 @@ public class SimpleHashMap<K, V> implements Iterable<K>{
 
         if ((tab = table) == null || (n = tab.length) == 0) {
             n = (tab = resize()).length;
-        } else if (size * 31 >= sizeOfTable) {
+        } else if (size >= sizeOfTable * loadfactor) {
             n = (tab = resize()).length;
         }
 
@@ -122,7 +132,7 @@ public class SimpleHashMap<K, V> implements Iterable<K>{
             size++;
         }
 
-        if (size * 31 >= sizeOfTable) {
+        if (size >= sizeOfTable * loadfactor) {
             n = (tab = resize()).length;
         }
 
@@ -132,8 +142,8 @@ public class SimpleHashMap<K, V> implements Iterable<K>{
     final Node<K,V>[] resize() {
         Node<K,V>[] oldTab = table;
         int oldCap = (oldTab == null) ? 0 : oldTab.length;
-//        int newCap = (oldCap == 0) ? 1 : oldCap << 1;
-        int newCap = (oldCap == 0) ? 1 : oldCap * 31;
+        int newCap = (oldCap == 0) ? 1 : oldCap << 1;
+//        int newCap = (oldCap == 0) ? 1 : oldCap * 2;
         Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
         table = newTab;
         if (oldTab != null) {
