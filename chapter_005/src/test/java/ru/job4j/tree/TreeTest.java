@@ -159,6 +159,19 @@ public class TreeTest {
 
     }
 
+    @Test public void whenThereIsMoreThenTwoChildsAtTheAnyParantTheTreeIsNotBinary() {
+
+        Tree tree = new Tree(getComparator());
+
+        fillTheTree(tree);
+
+        boolean result = tree.isBinary();
+
+        boolean expected = false;
+
+        assertThat(result, is(expected));
+    }
+
     public Comparator<User> getComparator() {
         return new Comparator<User>() {
             @Override
