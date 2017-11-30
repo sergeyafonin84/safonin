@@ -8,6 +8,14 @@ import java.util.*;
 //        В дереве не могут быть дубликатов.
 //        Итератор должен собрать все элементы в List и возвращать данные из скопированной коллекции.
 
+//WORK ON BURS
+//        1) использование аргумента-флага (itIsBFS) в методе findNodeBFSorDFS. Считается плохим стилем программирования.
+//        Это свидетельствует о том, что метод выполняет более одной операции.
+//
+//        2) в случае если в конструктор не передается компаратор, вы сравниваете объекты через ссылочное равенство
+//        if (current.getValue() == value). Это не верно. Вы же параметризуете дерево как E extends Comparable<E>,
+//        поэтому для корректной работы необходимо вызывать метод compareTo
+
 //!!! тут надо использовать для поиска обход в глубину. а для итератора обход в ширину.
 class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
@@ -119,8 +127,10 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         root = rootNode;
     }
 
-//    Поиск в глубину (англ. Depth-first search, DFS)
+    //    Поиск в глубину (англ. Depth-first search, DFS)
 //    Поиск в ширину (англ. breadth-first search, BFS)
+//        1) использование аргумента-флага (itIsBFS) в методе findNodeBFSorDFS. Считается плохим стилем программирования.
+//        Это свидетельствует о том, что метод выполняет более одной операции.
     public Node<E> findNodeBFSorDFS(Node<E> root, E value, boolean itIsBFS) {
 
         LinkedList<Node<E>> nodes = new LinkedList<Node<E>>() { {
@@ -140,7 +150,12 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
             Comparator<? super E> cpr = comparator;
             if (comparator == null) {
-                if (current.getValue() == value) {
+//                if (current.getValue() == value) {
+                //        2) в случае если в конструктор не передается компаратор, вы сравниваете объекты через ссылочное равенство
+//        if (current.getValue() == value). Это не верно. Вы же параметризуете дерево как E extends Comparable<E>,
+//        поэтому для корректной работы необходимо вызывать метод compareTo
+                int cmp = ((E) current.getValue()).compareTo(value);
+                if (cmp == 0) {
                     return current;
                 }
             } else {
@@ -191,7 +206,7 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         }
     }
 
-//    Метод должен проверять количество дочерних элементов в дереве. Если их <= 2 - то дерево бинарное.
+    //    Метод должен проверять количество дочерних элементов в дереве. Если их <= 2 - то дерево бинарное.
     public boolean isBinary() {
 
         boolean treeIsBinary = true;

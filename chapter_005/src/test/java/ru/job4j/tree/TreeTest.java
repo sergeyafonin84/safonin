@@ -43,7 +43,9 @@ public class TreeTest {
 
 //            Поиск в глубину (англ. Depth-first search, DFS)
 //            Поиск в ширину (англ. breadth-first search, BFS)
-            Tree.Node result = tree.findNodeBFSorDFS(tree.getRoot(), parent, false); // findNodeDFS(tree.getRoot(), parent);
+            //        1) использование аргумента-флага (itIsBFS) в методе findNodeBFSorDFS. Считается плохим стилем программирования.
+//        Это свидетельствует о том, что метод выполняет более одной операции.
+            Tree.Node result = tree.findNodeBFSorDFS(tree.getRoot(), parent, true); // findNodeDFS(tree.getRoot(), parent);
 
             List<Tree.Node> childrenList = new ArrayList<>();
 
@@ -89,7 +91,9 @@ public class TreeTest {
 
 //        Поиск в глубину (англ. Depth-first search, DFS)
 //        Поиск в ширину (англ. breadth-first search, BFS)
-        Tree.Node result = tree.findNodeBFSorDFS(tree.getRoot(), child2Child2, false); //findNodeDFS(tree.getRoot(), child2Child2);
+        //        1) использование аргумента-флага (itIsBFS) в методе findNodeBFSorDFS. Считается плохим стилем программирования.
+//        Это свидетельствует о том, что метод выполняет более одной операции.
+        Tree.Node result = tree.findNodeBFSorDFS(tree.getRoot(), child2Child2, true); //findNodeDFS(tree.getRoot(), child2Child2);
 
         List<Tree.Node> childrenList = new ArrayList<>();
 
@@ -122,6 +126,24 @@ public class TreeTest {
     public void whenFillTheTreeAccordingComparatorThenOneCanIterateItAccordingComparator() {
 
         Tree tree = new Tree(getComparator());
+
+        fillTheTree(tree);
+
+        Iterator iterator = tree.iterator();
+
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+
+    @Test
+    public void whenFillTheTreeAccordingInternalUserComparatorThenOneCanIterateItAccordingInternalUserComparator() {
+
+//        Tree tree = new Tree(getComparator());
+//        2) в случае если в конструктор не передается компаратор, вы сравниваете объекты через ссылочное равенство
+//        if (current.getValue() == value). Это не верно. Вы же параметризуете дерево как E extends Comparable<E>,
+//        поэтому для корректной работы необходимо вызывать метод compareTo
+        Tree tree = new Tree();
 
         fillTheTree(tree);
 
