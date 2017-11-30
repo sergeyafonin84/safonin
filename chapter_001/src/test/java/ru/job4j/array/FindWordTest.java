@@ -21,7 +21,7 @@ public class FindWordTest {
         String testWord = "Привет";
         String subTestWord = "При";
         FindWord findWord = new FindWord();
-        boolean result = findWord.FindSubWordInWord(testWord, subTestWord);
+        boolean result = findWord.findSubWordInWord(testWord, subTestWord); //FindSubWordInWord(testWord, subTestWord);
         boolean expected = true;
         assertThat(result, is(expected));
     }

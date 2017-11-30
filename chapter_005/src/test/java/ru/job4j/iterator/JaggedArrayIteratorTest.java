@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,11 +14,13 @@ public class JaggedArrayIteratorTest {
 
     private Iterator<Integer> it;
 
+    @Ignore
     @Before
     public void setUp() {
         it = new MatrixIterator(new int[][]{{1}, {3, 4}});
     }
 
+    @Ignore
     @Test(expected = NoSuchElementException.class)
     public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation() {
         assertThat(it.next(), is(1));
@@ -26,6 +29,7 @@ public class JaggedArrayIteratorTest {
         it.next();
     }
 
+    @Ignore
     @Test(expected = NoSuchElementException.class)
     public void sequentialHasNextInvocationDoesntAffectRetrievalOrder() {
         assertThat(it.hasNext(), is(true));
@@ -36,6 +40,7 @@ public class JaggedArrayIteratorTest {
         it.next();
     }
 
+    @Ignore
     @Test(expected = NoSuchElementException.class)
     public void hasNextNextSequentialInvocation() {
         assertThat(it.hasNext(), is(true));

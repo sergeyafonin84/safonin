@@ -1,7 +1,7 @@
 package ru.job4j.coffeemachine.vavealgortim;
 
 /**
- * TODO: comment
+ *
  *
  * @author job4j
  * @since 28.07.2016
@@ -19,15 +19,14 @@ public class TicTacToe {
 
         boolean result = false;
 
-        for (int x=0;x<this.values.length;x++) {
+        for (int x = 0; x < this.values.length; x++) {
 
-            for (int y=0;y<this.values.length;y++) {
+            for (int y = 0; y < this.values.length; y++) {
 
-                if (this.traversal(x, y, START, 0, 1) ||
+                if (this.traversal(x, y, START, 0, 1)
+                        || this.traversal(x, y, START, 1, 0)
 
-                        this.traversal(x, y, START, 1, 0) ||
-
-                        this.traversal(x, y, START, 1, 1)) {
+                        || this.traversal(x, y, START, 1, 1)) {
 
                     result = true;
 
@@ -48,9 +47,8 @@ public class TicTacToe {
 
         } else {
 
-            if (x + stepX < this.values.length && y + stepY < this.values.length &&
-
-                    this.values[x][y] == this.values[x + stepX][y + stepY]) {
+            if (x + stepX < this.values.length && y + stepY < this.values.length
+                    && this.values[x][y] == this.values[x + stepX][y + stepY]) {
 
                 result = this.traversal(x + stepX, y + stepY, count + 1, stepX, stepY);
             }

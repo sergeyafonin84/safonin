@@ -35,13 +35,13 @@ public class DirectoryOfUnits {
 
                 while (leftIterator.hasNext() && rightIterator.hasNext()) {
 
-                            String LeftSubName = (String) leftIterator.next();
+                            String leftSubName = (String) leftIterator.next();
                             String rightSubName = (String) rightIterator.next();
 
-                            if (LeftSubName.compareTo(rightSubName) > 0) {
+                            if (leftSubName.compareTo(rightSubName) > 0) {
                                 returnValue = -1;
                                 break;
-                            } else if (LeftSubName.compareTo(rightSubName) < 0) {
+                            } else if (leftSubName.compareTo(rightSubName) < 0) {
                                 returnValue = 1;
                                 break;
                             } else if (!leftIterator.hasNext()) {
