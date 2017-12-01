@@ -2,4 +2,4 @@
 [![codecov](https://codecov.io/gh/sergeyafonin84/safonin/branch/master/graph/badge.svg)](https://codecov.io/gh/sergeyafonin84/safonin)
 
 # safonin
-http://job4j.ru/ цель - получение работы. хочу получить предложение о работе через 6 месяцев. 2 апреля 2018 года.
+http://job4j.ru/ Цель - получение работы. хочу получить предложение о работе через 6 месяцев. 2 апреля 2018 года.
