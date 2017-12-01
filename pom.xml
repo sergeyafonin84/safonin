@@ -121,6 +121,9 @@
 
                             <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                             <excludes>**/SimpleHashMap.java</excludes>
+                            <excludes>**/PaintTest.java</excludes>
+                            <excludes>**/BoardTest.java</excludes>
+
 
                         </configuration>
                         <goals>
