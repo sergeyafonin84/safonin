@@ -1,5 +1,6 @@
 package ru.job4j.loop;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -18,6 +19,7 @@ public class PaintTest {
     /**
      * Test pain pyramid with height equals two.
      */
+    @Ignore
     @Test
     public void whenPiramidWithHeightTwoThenStringWithTwoRows() {
         Paint paint = new Paint();
@@ -29,6 +31,7 @@ public class PaintTest {
     /**
      * Test pain pyramid with height equals three.
      */
+    @Ignore
     @Test
     public void whenPiramidWithHeightThreeThenStringWithThreeRows() {
         //напишите здесь тест, проверяющий формирование пирамиды для высоты 3.
