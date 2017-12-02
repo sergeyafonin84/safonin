@@ -1,13 +1,8 @@
 package ru.job4j.task.stocksImport;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import com.sun.org.apache.xpath.internal.operations.Or;
+
+import java.util.*;
 
 /**
  * TODO: comment
@@ -55,12 +50,77 @@ public class Book {
 
     public void show(Map<Float, Order> sell, Map<Float, Order> buy) {
         StringBuilder builder = new StringBuilder();
-        for (Order order : sell.values()) {
+
+//        не совмещены заявки покупки и продажи. их надо совместить.
+//                вычесть соотвествующие заявки на покупку и продажу
+//        sell >= ask - то вычесть объемы. если у заявки 0 объема ее надо удалить из стакана.
+
+        //пойду по каждому аску начиная с самого дешевого. беру самый дешевый аск иду по селам снизу вверх и отнимаю значения
+        //
+
+        ArrayList<Order> myBuyValuesArray = new ArrayList();
+
+        for (Order buyOrder : buy.values()) {
+            myBuyValuesArray.add(buyOrder);
+        }
+
+        ArrayList<Order> mySellValuesArray = new ArrayList();
+
+        for (Order sellOrder : sell.values()) {
+            mySellValuesArray.add(sellOrder);
+        }
+
+        //все верно идет от дешевых к дороги
+        for (int indBuy = 0; indBuy < myBuyValuesArray.size(); indBuy++) {
+
+            //!!!!!!!! неверно для данного цикла т.к. идет от дорогих к дешевым нужно помянять порядок на обратный
+            for (int indSell = 0; indSell < mySellValuesArray.size(); indSell++) {
+
+                if (indBuy >= myBuyValuesArray.size() || indSell >= mySellValuesArray.size()) {
+                    break;
+                }
+
+                if (myBuyValuesArray.get(indBuy).price < mySellValuesArray.get(indSell).price) {
+
+                } else {
+                    if (myBuyValuesArray.get(indBuy).volume < mySellValuesArray.get(indSell).volume) {
+
+                        mySellValuesArray.get(indSell).volume = mySellValuesArray.get(indSell).volume - mySellValuesArray.get(indSell).volume;
+                        myBuyValuesArray.remove(myBuyValuesArray.get(indBuy));
+//                        indBuy--;
+
+                    } else if (myBuyValuesArray.get(indBuy).volume == mySellValuesArray.get(indSell).volume) {
+                        myBuyValuesArray.remove(myBuyValuesArray.get(indBuy));
+//                        indBuy--;
+                        mySellValuesArray.remove(mySellValuesArray.get(indSell));
+//                        indSell--;
+
+                    } else { //buyOrder.volume > sellOrder.volume // наоборот можно полностью удалить sellOrder из стакана а в buyOrder уменьшить количество и вернуться на итерацию  назад
+                        myBuyValuesArray.get(indBuy).volume = myBuyValuesArray.get(indBuy).volume - myBuyValuesArray.get(indBuy).volume;
+                        mySellValuesArray.remove(mySellValuesArray.get(indSell));
+//                        indSell--;
+
+                    }
+                }
+            }
+        }
+
+        for (Order order : mySellValuesArray) {
             builder.append(String.format("\t\t%5s %7s\n", order.price, order.volume));
         }
-        for (Order order : buy.values()) {
+        for (Order order : myBuyValuesArray) {
             builder.append(String.format("%7s %5s\n", order.volume, order.price));
         }
         System.out.println(builder);
+
+        int a = 1;
+
+//            for (Order order : sell.values()) {
+//                builder.append(String.format("\t\t%5s %7s\n", order.price, order.volume));
+//            }
+//            for (Order order : buy.values()) {
+//                builder.append(String.format("%7s %5s\n", order.volume, order.price));
+//            }
+//            System.out.println(builder);
+        }
     }
-}

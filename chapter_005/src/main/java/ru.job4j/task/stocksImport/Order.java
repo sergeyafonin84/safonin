@@ -12,7 +12,7 @@ public class Order {
     public final String book;
     public final Type type;
     public final float price;
-    public final int volume;
+    public int volume;
     public final int id;
 
     public Order(String book, Type type, float price, int volume, int id) {
