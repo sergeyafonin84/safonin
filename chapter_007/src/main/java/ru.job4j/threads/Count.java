@@ -2,17 +2,50 @@ package ru.job4j.threads;
 
 public class Count {
 
-    public static void main(String[] args) {
-
-        System.out.println("start");
+    public static void main(String[] args) throws InterruptedException {
 
         String text = Count.getText();
 
-        new Thread(new CountTheNumberOfWords(text)).start();
+        Thread thread1 = new Thread(new ShowStart());
+        Thread thread2 = new Thread(new CountTheNumberOfWords(text));
+        Thread thread3 = new Thread(new CountTheNumberOfSpaces(text));
+        Thread thread4 = new Thread(new ShowFinish());
 
-        new Thread(new CountTheNumberOfSpaces(text)).start();
+        thread1.start();
 
-        System.out.println("finish");
+        try {
+            thread1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        thread2.start();
+
+        thread3.start();
+
+        try {
+            thread3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        thread4.start();
+    }
+
+    public static final class ShowStart implements Runnable {
+
+        @Override
+        public void run() {
+            System.out.println("start");
+        }
+    }
+
+    public static final class ShowFinish implements Runnable {
+
+        @Override
+        public void run() {
+            System.out.println("finish");
+        }
     }
 
     public static final class CountTheNumberOfWords implements Runnable {
