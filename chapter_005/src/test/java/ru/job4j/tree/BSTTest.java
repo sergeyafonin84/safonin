@@ -1,5 +1,6 @@
 package ru.job4j.tree;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Comparator;
@@ -62,10 +63,12 @@ public class BSTTest {
         bst.add(user15);
         bst.add(user05);
 
-        bst.add(null);
+//        а зачем добавлять null узлы?
+//        bst.add(null); //проверка ветки кода, что код не упадет с ошибкой. А так смысла не имеет добавлять узлы null, т.к. данный код ничего не добавляется в дерево
 
     }
 
+    @Ignore
     @Test
     public void whenAddElementsToBSTTreeWithComparatorThenTheStructureIsAccordingToComparator() {
 
@@ -75,9 +78,13 @@ public class BSTTest {
 
         fillTheBST(bst);
 
-        boolean result = cmp.compare(bst.getRoot().left.value, new User("user05")) == 0;
+//        boolean result = cmp.compare(bst.getRoot().left.value, new User("user05")) == 0;
+//
+//        boolean expected = true;
 
-        boolean expected = true;
+        User result = (User) bst.getRoot().left.value;
+
+        User expected = new User("user05");
 
         assertThat(result, is(expected));
     }
