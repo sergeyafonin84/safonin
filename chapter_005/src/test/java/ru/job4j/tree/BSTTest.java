@@ -68,7 +68,7 @@ public class BSTTest {
 
     }
 
-    @Ignore
+//    @Ignore
     @Test
     public void whenAddElementsToBSTTreeWithComparatorThenTheStructureIsAccordingToComparator() {
 
@@ -78,13 +78,61 @@ public class BSTTest {
 
         fillTheBST(bst);
 
+        boolean result = cmp.compare(bst.getRoot().left.value, new User("user05")) == 0;
+
+        boolean expected = true;
+
+
+// В версии Hamcrest 1.3 нет готового мэтчера для использования компаратора. Надо писать свой, либо использовать явный компаратор и сравнивать уже результат вызова метода compare. А запись is(expected) эквивалентна is(equalTo(expected)).
+//
+
+//        1) В том то и проблема, что у меня есть свой метод:
+//
+//        public Comparator<User> getComparator() {
+//            return new Comparator<User>() {
+//                @Override
+//                public int compare(User o1, User o2) {
+//                    return o1.name.compareTo(o2.name);
+//                }
+//            };
+//        }
+//
+//        Но при сравнении: "
+//        assertThat(result, is(expected));" - программа в него не заходит и в итоге выдает, что объекты различны, хотя наименования одинаковы:
+//
+//        TEST FAILED:
+//
+//        java.lang.AssertionError:
+//        Expected: is <User{name='user05'}>
+//        but: was <User{name='user05'}>
+//        Expected :is <User{name='user05'}>
+//
+//        код теста:
+//
+//        @Test
+//        public void whenAddElementsToBSTTreeWithComparatorThenTheStructureIsAccordingToComparator() {
+//
+//            Comparator cmp = getComparator();
+//
+//            BST bst = new BST(cmp);
+//
+//            fillTheBST(bst);
+
 //        boolean result = cmp.compare(bst.getRoot().left.value, new User("user05")) == 0;
 //
 //        boolean expected = true;
 
-        User result = (User) bst.getRoot().left.value;
+//            User result = (User) bst.getRoot().left.value;
+//
+//            User expected = new User("user05");
+//
+//            assertThat(result, is(expected));
+//        }
 
-        User expected = new User("user05");
+// у них механизм проверки разный. treemap используешь compareTO = 0 а assertThat equals у тебя они по equals = false.
+//        User result = (User) bst.getRoot().left.value;
+//
+//        User expected = new User("user05");
 
         assertThat(result, is(expected));
     }
