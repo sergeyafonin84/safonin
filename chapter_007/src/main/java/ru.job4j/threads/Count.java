@@ -12,17 +12,26 @@ public class Count {
 
         long startTime = System.currentTimeMillis();
 
+
         threadCurrTime.start();
 
         threadCont.start();
 
-        while (threadCont.isAlive() && threadCurrTime.isAlive()) {
-            try {
-                Thread.sleep(1L); // выключаем поток main, чтобы в threadCont.run() что-то успело посчитаться
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+
+        //WORK ON BUGS task 1019
+//        хорошо, можно закрывать задачу.
+//
+//        Вместо засыпания в main можно было сделать join.
+//        while (threadCont.isAlive() && threadCurrTime.isAlive()) {
+//            try {
+//                Thread.sleep(1L); // выключаем поток main, чтобы в threadCont.run() что-то успело посчитаться
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        threadCurrTime.join(); //действительно главный поток ждет ждет окончания выполнения потока threadCurrTime
+
+
 
         threadCont.interrupt();
 
