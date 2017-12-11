@@ -1,22 +1,29 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 //Необходимо создать контейнер с методами add(E value);E get(int index);и реализовать для него Iterable<E>
 //Внутри контейнера нельзя использовать структуры данных из JDK - ArrayList. LinkedList и другие.
+@ThreadSafe
 public class Container<E> implements SimpleContainer<E> {
 
     //Внутри контейнера должен быть массив Object[] container;
+    @GuardedBy("this")
     private int size;
 
+    @GuardedBy("this")
     private int currentMaxSize = 1;
 
+    @GuardedBy("this")
     Object[] container = new Object[currentMaxSize];
 
     //    Контейнер должен быть динамический. То есть метод add(E value) - может принимать бесконечное количество элементов.
     @Override
-    public void add(E value) {
+    public synchronized void add(E value) {
 
         if ((size + 1) > currentMaxSize) {
 
@@ -36,7 +43,7 @@ public class Container<E> implements SimpleContainer<E> {
     }
 
     @Override
-    public E get(int index) {
+    public synchronized  E get(int index) {
 
         E returnValue = null;
 
@@ -48,7 +55,7 @@ public class Container<E> implements SimpleContainer<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public synchronized  Iterator<E> iterator() {
         return new Itr();
     }
 

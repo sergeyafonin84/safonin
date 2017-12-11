@@ -1,21 +1,28 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 //Внутри контейнера должен данные должны храниться через ссылки.
 //Контейнер должен быть динамический. То есть метод add(E value) - может принимать бесконечное количество элементов.
 //Внутри контейнера нельзя использовать структуры данных из JDK - ArrayList. LinkedList и другие.
+@ThreadSafe
 public class LinkedContainer<E> implements SimpleContainer<E> {
 
+    @GuardedBy("this")
     int size = 0;
 
+    @GuardedBy("this")
     Node<E> first;
 
+    @GuardedBy("this")
     Node<E> last;
 
     @Override
-    public void add(E value) {
+    public synchronized void add(E value) {
         linkLast(value);
     }
 
@@ -45,19 +52,19 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
     }
 
     @Override
-    public E get(int index) {
+    public synchronized E get(int index) {
         checkElementIndex(index);
         return node(index).item;
     }
 
-    private void checkElementIndex(int index) {
+    private synchronized void checkElementIndex(int index) {
         if (!isElementIndex(index)) {
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
         }
 
     }
 
-    private boolean isElementIndex(int index) {
+    private synchronized boolean isElementIndex(int index) {
         return index >= 0 && index < size;
     }
 
@@ -83,7 +90,7 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
         }
     }
 
-    private String outOfBoundsMsg(int index) {
+    private synchronized String outOfBoundsMsg(int index) {
         return "Index: " + index + ", Size: " + size;
     }
 
@@ -106,12 +113,12 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
         }
 
         @Override
-        public boolean hasNext() {
+        public synchronized boolean hasNext() {
             return nextIndex < size;
         }
 
         @Override
-        public E next() {
+        public synchronized E next() {
 
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -124,18 +131,18 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
         }
     }
 
-    private void checkPositionIndex(int index) {
+    private synchronized void checkPositionIndex(int index) {
         if (!isPositionIndex(index)) {
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
         }
 
     }
 
-    private boolean isPositionIndex(int index) {
+    private synchronized boolean isPositionIndex(int index) {
         return index >= 0 && index <= size;
     }
 
-    protected E unlinkFirst(Node<E> f) {
+    protected synchronized E unlinkFirst(Node<E> f) {
         // assert f == first && f != null;
         final E element = f.item;
         final Node<E> next = f.next;
@@ -153,11 +160,11 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
         return element;
     }
 
-    public void addFirst(E e) {
+    public synchronized void addFirst(E e) {
         linkFirst(e);
     }
 
-    private void linkFirst(E e) {
+    private synchronized void linkFirst(E e) {
         final Node<E> f = first;
         final Node<E> newNode = new Node<>(null, e, f);
         first = newNode;
@@ -171,7 +178,7 @@ public class LinkedContainer<E> implements SimpleContainer<E> {
 //        modCount++;
     }
 
-    protected E unlinkLast(Node<E> l) {
+    protected synchronized E unlinkLast(Node<E> l) {
         // assert l == last && l != null;
         final E element = l.item;
         final Node<E> prev = l.prev;
