@@ -18,7 +18,4 @@ public class RegExpLoaderTest {
         final Order order = loader.parse("<AddOrder book=\"book-1\" operation=\"SELL\" price=\"100.50\" volume=\"81\" orderId=\"1\" />", true);
         assertThat(order.id, is(1));
     }
-
-//    @Test
-//    public void
 }
