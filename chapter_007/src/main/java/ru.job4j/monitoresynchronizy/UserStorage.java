@@ -47,7 +47,7 @@ public class UserStorage {
         }
     }
 
-    public User findUserById(int id) {
+    public synchronized User findUserById(int id) {
 
         User user = null;
 
@@ -62,7 +62,7 @@ public class UserStorage {
         return user;
     }
 
-    public static void main(String[] args) {
+    public synchronized static void main(String[] args) {
         UserStorage storage = new UserStorage();
         storage.add(new User(1, 100));
         storage.add(new User(2, 200));
@@ -76,7 +76,7 @@ class User {
     @GuardedBy("this") int amount;
 
     @Override
-    public boolean equals(Object o) {
+    public synchronized boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -93,7 +93,7 @@ class User {
     }
 
     @Override
-    public int hashCode() {
+    public synchronized int hashCode() {
         int result = id;
         result = 31 * result + amount;
         return result;
