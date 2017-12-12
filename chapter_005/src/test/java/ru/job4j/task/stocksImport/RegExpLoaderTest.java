@@ -1,5 +1,6 @@
 package ru.job4j.task.stocksImport;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
  */
 public class RegExpLoaderTest {
 
+    @Ignore
     @org.junit.Test
     public void testParse() throws Exception {
         RegExpLoader loader = new RegExpLoader();
