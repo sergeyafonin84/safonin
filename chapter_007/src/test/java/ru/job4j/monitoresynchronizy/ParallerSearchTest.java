@@ -17,31 +17,31 @@ public class ParallerSearchTest {
     @Test
     public void whenSearchTextInFilesThenGetFilePathsThereThatTextFound() {
 
-        long startTime = System.currentTimeMillis();
-
-        File[] disks = File.listRoots();
-
-        int numberOfDisks = disks.length;
-
-        if (numberOfDisks > 0) {
-
-            ArrayList<String> exts = new ArrayList<>();
-
-            exts.add("txt");
-
-            ParallerSearch parallerSearch = new ParallerSearch(disks[0], "asdfasdfasdf", exts);
-
-            List<String> result = parallerSearch.result(1);
-
-            for (String path : result) {
-                System.out.println("Found path: " + path);
-            }
-
-            long endTime = System.currentTimeMillis();
-
-            long timeConsumedMillis = endTime - startTime;
-
-            System.out.println("all time: " + timeConsumedMillis + "ms");
-        }
+//        long startTime = System.currentTimeMillis();
+//
+//        File[] disks = File.listRoots();
+//
+//        int numberOfDisks = disks.length;
+//
+//        if (numberOfDisks > 0) {
+//
+//            ArrayList<String> exts = new ArrayList<>();
+//
+//            exts.add("txt");
+//
+//            ParallerSearch parallerSearch = new ParallerSearch(disks[0], "asdfasdfasdf", exts);
+//
+//            List<String> result = parallerSearch.result(1);
+//
+//            for (String path : result) {
+//                System.out.println("Found path: " + path);
+//            }
+//
+//            long endTime = System.currentTimeMillis();
+//
+//            long timeConsumedMillis = endTime - startTime;
+//
+//            System.out.println("all time: " + timeConsumedMillis + "ms");
+//        }
     }
 }
