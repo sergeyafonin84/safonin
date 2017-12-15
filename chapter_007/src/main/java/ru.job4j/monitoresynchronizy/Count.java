@@ -12,10 +12,11 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class Count {
 
+    @ThreadSafe
     public static final class Counter {
         // https://samxiangyu.wordpress.com/2015/02/20/java-concurrency-guardedby/
         @GuardedBy("this")
-        long count = 0;
+        private long count = 0;
 
         public void add(long value) {
             synchronized (this) {
@@ -24,9 +25,9 @@ public class Count {
         }
     }
 
-
+    @ThreadSafe
     public static final class CounterThread extends Thread {
-        protected final Counter counter;
+        private final Counter counter;
 
         public CounterThread(final Counter counter) {
             this.counter = counter;
