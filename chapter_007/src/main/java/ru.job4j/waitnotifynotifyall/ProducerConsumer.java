@@ -12,8 +12,8 @@ public class ProducerConsumer {
 
         new Thread(new Producer(queue)).start();
 
-        Thread.currentThread().sleep(1000);
-
+//        Thread.currentThread().sleep(1000);
+//
         new Thread(new Consumer(queue)).start();
     }
 
@@ -119,12 +119,11 @@ class BlockingQueue<T> {
             wait();
         }
 
-        if (this.queue.size() == 0) {
-
-            System.out.println("BlockingQueue queue is empty, notifyAll (method put)");
-
-            notifyAll();
-        }
+//        WORK ON BUGS почему в методе put потоки уведомляются только когда очередь пуста? Какой в этом смысл? И соответственно наоборот в метода take.
+//        if (this.queue.size() == 0) {
+//            System.out.println("BlockingQueue queue is empty, notifyAll (method put)");
+        notifyAll();
+//        }
 
         this.queue.add(item);
 
@@ -143,12 +142,11 @@ class BlockingQueue<T> {
             wait();
         }
 
-        if (this.queue.size() == this.limit) {
-
-            System.out.println("BlockingQueue queue is full, notify (method take)");
-
-            notifyAll();
-        }
+//       WORK ON BUGS в методе put потоки уведомляются только когда очередь пуста? Какой в этом смысл? И соответственно наоборот в метода take.
+//        if (this.queue.size() == this.limit) {
+//            System.out.println("BlockingQueue queue is full, notify (method take)");
+        notifyAll();
+//        }
 
         T item = (T) this.queue.remove(0);
 
