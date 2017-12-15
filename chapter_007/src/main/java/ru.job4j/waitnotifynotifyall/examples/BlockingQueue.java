@@ -19,10 +19,12 @@ public class BlockingQueue<T> {
             System.out.println("[BlockingQueue] queue is full, waiting until space is free");
             wait();
         }
-        if (this.queue.size() == 0) {
-            System.out.println("[BlockingQueue] queue is empty, notify");
+
+//        почему в методе put потоки уведомляются только когда очередь пуста? Какой в этом смысл? И соответственно наоборот в метода take.
+//        if (this.queue.size() == 0) {
+//            System.out.println("[BlockingQueue] queue is empty, notify");
             notifyAll();
-        }
+//        }
         this.queue.add(item);
         System.out.println("[BlockingQueue] put ok: " + item);
     }
@@ -34,10 +36,11 @@ public class BlockingQueue<T> {
             System.out.println("[BlockingQueue] queue is empty, waiting until smth is put");
             wait();
         }
-        if (this.queue.size() == this.limit) {
-            System.out.println("[BlockingQueue] queue is full, notify");
+//        почему в методе put потоки уведомляются только когда очередь пуста? Какой в этом смысл? И соответственно наоборот в метода take.
+//        if (this.queue.size() == this.limit) {
+//            System.out.println("[BlockingQueue] queue is full, notify");
             notifyAll();
-        }
+//        }
 
         T item = (T) this.queue.remove(0);
         System.out.println("[BlockingQueue] take ok: " + item);
