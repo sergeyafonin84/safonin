@@ -4,7 +4,7 @@ public class ThreadPoolTest {
 
     public static void main(String[] args) {
 
-        Threadpool threadpool = Threadpool.getInstance();
+        Threadpool threadpool = new Threadpool(Runtime.getRuntime().availableProcessors()); //WORK ON BUGS//Threadpool.getInstance();
 
         for (int i = 0; i < 50; i++) {
 

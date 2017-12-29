@@ -24,9 +24,17 @@ import java.util.Queue;
 //
 //}
 
+//WORK ON BUGS
+//логика вся верная. что мне не нравиться.
+//
+//        1. появление статических методов. они тут не нужны
+//
+//        2. метод add - execute. кто-то лишний. почисти.
+
 public class Threadpool {
         // Count of threadpools created
-        private static AtomicInteger poolCount = new AtomicInteger(0);
+//WORK ON BUGS //        private static AtomicInteger poolCount = new AtomicInteger(0);
+        private AtomicInteger poolCount = new AtomicInteger(0);
 
         // Queue of runnables
         private ConcurrentLinkedQueue<Runnable> runnables;
@@ -81,7 +89,8 @@ public class Threadpool {
          *
          * @param threadCount Number of SimpleThreadpoolThreads to add to the pool
          */
-        private Threadpool(int threadCount) {
+//        private Threadpool(int threadCount) {
+        public Threadpool(int threadCount) {
                 // Increment pool count
                 poolCount.incrementAndGet();
                 this.runnables = new ConcurrentLinkedQueue<>();
@@ -99,7 +108,8 @@ public class Threadpool {
          *
          * @return new SimpleThreadpool
          */
-        public static Threadpool getInstance() {
+//WORK ON BUGS //        public static Threadpool getInstance() {
+        public Threadpool getInstance() {
                 return getInstance(Runtime.getRuntime().availableProcessors());
         }
 
@@ -109,26 +119,37 @@ public class Threadpool {
          * @param threadCount Threads to add to the pool
          * @return new SimpleThreadpool
          */
-        public static Threadpool getInstance(int threadCount) {
+//WORK ON BUGS //        public static Threadpool getInstance(int threadCount) {
+        public Threadpool getInstance(int threadCount) {
                 return new Threadpool(threadCount);
         }
 
-        /**
-         * Adds a runnable to the queue for processing
-         *
-         * @param runnable Runnable to be added to the pool
-         */
-        public void execute(Runnable runnable) {
-                if (this.execute.get()) {
-                        runnables.add(runnable);
-                } else {
-                        throw new IllegalStateException("Threadpool terminating, unable to execute runnable");
-                }
-        }
+
+        //WORK ON BUGS
+//        /**
+//         * Adds a runnable to the queue for processing
+//         *
+//         * @param runnable Runnable to be added to the pool
+//         */
+//        public void execute(Runnable runnable) {
+//                if (this.execute.get()) {
+//                        runnables.add(runnable);
+//                } else {
+//                        throw new IllegalStateException("Threadpool terminating, unable to execute runnable");
+//                }
+//        }
 
         public void add(Work work) {
 
-                execute(work);
+
+                //WORK ON BUGS
+//                execute(work);
+
+                if (this.execute.get()) {
+                        runnables.add(work);
+                } else {
+                        throw new IllegalStateException("Threadpool terminating, unable to execute runnable");
+                }
 
         }
 
