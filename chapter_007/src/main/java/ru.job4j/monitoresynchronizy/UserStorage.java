@@ -21,22 +21,32 @@ import java.util.LinkedList;
 //        stoge.add(new User(2, 200));
 //        stoge.transfer(1, 2, 50);
 
+
+
+
+//        WORK ON BUGS
+//        все методы в которых есть доступ к userList должны быть синхронизированы (add, update, delete, transfer), иначе data race.
+//
+//        Аннотации jcip @ThreadSafe, @GuardedBy сами по себе не обеспечивают потокобезопасности.
+//        Они лишь дают знать, что программист, который писал код постарался сделать его потокобезопасным, но не факт что сделал.
+//        Они могут использоваться статическими анализаторами кода для поиска нарушений потокобезопасного поведения.
+
 @ThreadSafe
 public class UserStorage {
 
     @GuardedBy("this")
     HashSet<User> userList = new HashSet<>();
 
-    boolean add(User user) {
+    synchronized boolean add(User user) {
         return userList.add(user);
     }
-    boolean update(User user) {
+    synchronized boolean update(User user) {
         return userList.add(user);
     }
-    boolean delete(User user) {
+    synchronized boolean delete(User user) {
         return userList.remove(user);
     }
-    void transfer(int fromId, int toId, int amount) {
+    synchronized void transfer(int fromId, int toId, int amount) {
 
         User userPayer = findUserById(fromId);
         User userGetter = findUserById(toId);
