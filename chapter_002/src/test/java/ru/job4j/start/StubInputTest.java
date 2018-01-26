@@ -7,7 +7,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- *
+ * sql added 26.01.2018
  */
 public class StubInputTest {
     /**
@@ -52,6 +52,7 @@ public class StubInputTest {
         Input input = new StubInput(new String[] {"0", "nameForItemDelete", "description1", "1", "0", "nameForItemDelete", "description2", "1",
                                                      "0", "name3", "description3", "1", "6"});
         new StartUi(input, tracker).init();
+
 
 //        Item[] itemsForDeleting = tracker.findByName(new String("nameForItemDelete"));
         ArrayList<Item> itemsForDeleting = tracker.findByName(new String("nameForItemDelete"));

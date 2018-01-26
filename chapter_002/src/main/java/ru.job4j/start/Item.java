@@ -1,7 +1,10 @@
 package ru.job4j.start;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Sergey Afonin (mailto afonin1c@mail.ru)
+ * sql added 26.01.2018
  */
 public class Item {
 
@@ -75,6 +78,10 @@ public class Item {
         return this.create;
     }
 
+    public LocalDateTime getCreateSql() {
+        return LocalDateTime.now();
+    }
+
     /**
      * get item id.
      * @return item id.
@@ -107,4 +114,31 @@ public class Item {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Item item = (Item) o;
+
+        if (!id.equals(item.id)) {
+            return false;
+        }
+        if (!name.equals(item.name)) {
+            return false;
+        }
+        return description.equals(item.description);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + description.hashCode();
+        return result;
+    }
 }

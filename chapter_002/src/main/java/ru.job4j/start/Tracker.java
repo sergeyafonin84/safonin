@@ -6,20 +6,33 @@ import java.util.Random;
 /**
  * @author Sergey Afonin (mailto: afonin1c@mail.ru)
  * @since 19.10.2017
+ * sql added 26.01.2018
  */
 public class Tracker {
 
+//    public Tracker() {
+//        this.trackerSQL =
+//    }
+
     /**
+
      * items is an array for items.
      */
 //    private Item[] items = new Item[100];
     private ArrayList<Item> items = new ArrayList<Item>();
 
-
+    //+sql
+    private TrackerSQL trackerSQL = new TrackerSQL();
     /**
-     * position is the counter that counts number of elements that had been added.
+     * position is the counter that counts number of
+     * elements that had been added.
      */
     private int position = 0;
+    //-sql
+
+    public TrackerSQL getTrackerSQL() {
+        return trackerSQL;
+    }
 
     /**
      * RN is a constant which contains current random value.
@@ -34,7 +47,14 @@ public class Tracker {
     public Item add(Item item) {
         item.setId(this.generateId());
 //        this.items[position++] = item;
-        this.items.add(position++, item);
+
+//        this.items.add(position++, item);
+
+        //+sql
+        this.trackerSQL.addSql(item);
+        //-sql
+
+
         return item;
     }
 
@@ -52,13 +72,14 @@ public class Tracker {
      * @param item is item for update.
      */
     public void update(Item item) {
-        String id = item.getId();
-        for (Item itemForUpdate : items) {
-            if (item != null && item.getId().equals(id)) {
-                itemForUpdate = item;
-                break;
-            }
-        }
+//        String id = item.getId();
+//        for (Item itemForUpdate : items) {
+//            if (item != null && item.getId().equals(id)) {
+//                itemForUpdate = item;
+//                break;
+//            }
+//        }
+        trackerSQL.updateSql(item);
     }
 
     /**
@@ -80,6 +101,8 @@ public class Tracker {
                 break;
             }
         }
+
+        trackerSQL.deleteSql(item);
     }
 
     /**
@@ -87,35 +110,37 @@ public class Tracker {
      * @return all items with not null value
      */
     public Item[] findAll() {
-        int quontityOfElements = 0;
-//        for (int index = 0; index < items.length; index++) {
-//            if (items[index] != null) {
+//        int quontityOfElements = 0;
+////        for (int index = 0; index < items.length; index++) {
+////            if (items[index] != null) {
+////                quontityOfElements = quontityOfElements + 1;
+////            }
+////        }
+//        for (int index = 0; index < items.size(); index++) {
+//            if (items.get(index) != null) {
 //                quontityOfElements = quontityOfElements + 1;
 //            }
 //        }
-        for (int index = 0; index < items.size(); index++) {
-            if (items.get(index) != null) {
-                quontityOfElements = quontityOfElements + 1;
-            }
-        }
-
-        Item[] returnItems = new Item[quontityOfElements];
-        int indexReturnItems = 0;
-
-//        for (int index = 0; index < items.length; index++) {
-//            if (items[index] != null) {
-//                returnItems[indexReturnItems] = items[index];
+//
+//        Item[] returnItems = new Item[quontityOfElements];
+//        int indexReturnItems = 0;
+//
+////        for (int index = 0; index < items.length; index++) {
+////            if (items[index] != null) {
+////                returnItems[indexReturnItems] = items[index];
+////                indexReturnItems = indexReturnItems + 1;
+////            }
+////        }
+//        for (int index = 0; index < items.size(); index++) {
+//            if (items.get(index) != null) {
+//                returnItems[indexReturnItems] = items.get(index);
 //                indexReturnItems = indexReturnItems + 1;
 //            }
 //        }
-        for (int index = 0; index < items.size(); index++) {
-            if (items.get(index) != null) {
-                returnItems[indexReturnItems] = items.get(index);
-                indexReturnItems = indexReturnItems + 1;
-            }
-        }
+//
+//        return returnItems;
 
-        return returnItems;
+        return trackerSQL.findAllSql();
     }
 
     /**
@@ -126,37 +151,38 @@ public class Tracker {
      */
 //    public Item[] findByName(String key) {
     public ArrayList<Item> findByName(String key) {
-        int quontityOfElements = 0;
-//        for (int index = 0; index < items.length; index++) {
-//            if (items[index] != null && items[index].getName().equals(key)) {
+//        int quontityOfElements = 0;
+////        for (int index = 0; index < items.length; index++) {
+////            if (items[index] != null && items[index].getName().equals(key)) {
+////                quontityOfElements = quontityOfElements + 1;
+////            }
+////        }
+//        for (int index = 0; index < items.size(); index++) {
+//            if (items.get(index) != null && items.get(index).getName().equals(key)) {
 //                quontityOfElements = quontityOfElements + 1;
 //            }
 //        }
-        for (int index = 0; index < items.size(); index++) {
-            if (items.get(index) != null && items.get(index).getName().equals(key)) {
-                quontityOfElements = quontityOfElements + 1;
-            }
-        }
-
-//        Item[] returnItems = new Item[quontityOfElements];
-        ArrayList<Item> returnItems = new ArrayList<Item>();
-        int indexReturnItems = 0;
-
-//        for (int index = 0; index < items.length; index++) {
-//            if (items[index] != null && items[index].getName().equals(key)) {
-//                returnItems[indexReturnItems] = items[index];
+//
+////        Item[] returnItems = new Item[quontityOfElements];
+//        ArrayList<Item> returnItems = new ArrayList<Item>();
+//        int indexReturnItems = 0;
+//
+////        for (int index = 0; index < items.length; index++) {
+////            if (items[index] != null && items[index].getName().equals(key)) {
+////                returnItems[indexReturnItems] = items[index];
+////                indexReturnItems = indexReturnItems + 1;
+////            }
+////        }
+//
+//        for (int index = 0; index < items.size(); index++) {
+//            if (items.get(index) != null && items.get(index).getName().equals(key)) {
+////                returnItems[indexReturnItems] = items.get(index);
+//                returnItems.add(indexReturnItems, items.get(index));
 //                indexReturnItems = indexReturnItems + 1;
 //            }
 //        }
-
-        for (int index = 0; index < items.size(); index++) {
-            if (items.get(index) != null && items.get(index).getName().equals(key)) {
-//                returnItems[indexReturnItems] = items.get(index);
-                returnItems.add(indexReturnItems, items.get(index));
-                indexReturnItems = indexReturnItems + 1;
-            }
-        }
-        return returnItems;
+//        return returnItems;
+        return trackerSQL.findByNameSql(key);
     }
 
     /**
@@ -166,14 +192,20 @@ public class Tracker {
      * @return item with the same id.
      */
     protected Item findById(String id) {
-        Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
-                result = item;
-                break;
-            }
-        }
-        return result;
+//        Item result = null;
+//        for (Item item : items) {
+//            if (item != null && item.getId().equals(id)) {
+//                result = item;
+//                break;
+//            }
+//        }
+//
+//
+//
+//        return result;
+
+
+        return trackerSQL.findByIdSql(id);
     }
 
     /**
@@ -182,9 +214,11 @@ public class Tracker {
      */
     void edit(Item item) {
 
-        Item itemForEdit = findById(item.getId());
-        itemForEdit.setName(item.getName());
-        itemForEdit.setDescription(item.getDescription());
+//        Item itemForEdit = findById(item.getId());
+//        itemForEdit.setName(item.getName());
+//        itemForEdit.setDescription(item.getDescription());
+
+        trackerSQL.editSql(item);
 
     }
 
@@ -193,12 +227,13 @@ public class Tracker {
      * @return all items
      */
     public Item[] getAll() {
-        Item[] result = new Item[this.position];
-        for (int index = 0; index != this.position; index++) {
-//            result[index] = this.items[index];
-            result[index] = this.items.get(index);
-        }
-        return result;
+//        Item[] result = new Item[this.position];
+//        for (int index = 0; index != this.position; index++) {
+////            result[index] = this.items[index];
+//            result[index] = this.items.get(index);
+//        }
+//        return result;
+        return trackerSQL.getAllSql();
     }
 
     /**

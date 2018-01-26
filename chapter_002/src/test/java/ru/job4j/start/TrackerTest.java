@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Sergey Afonin (mailto afonin1c@mail.ru)
  * @since 19.10.2017
+ * sql added 26.01.2018
  */
 public class TrackerTest {
 
