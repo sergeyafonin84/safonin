@@ -138,7 +138,7 @@
                             <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                             <!--<excludes>**/SimpleHashMap.java,**/Paint.java,**/PaintTest.java,**/Board.java,**/BoardTest.java</excludes>-->
                             <excludes>**/SimpleHashMap.java,**/stocksImport/*,**/NonBlockinngCashOnConcurrentHashMap.java
-                                ,**/SQLStorage.java</excludes>
+                                ,**/SQLStorage.java ,**/StubInputTest.java ,**/TrackerTest.java</excludes>
                             <!--<excludes>**/PaintTest.java</excludes>-->
                             <!--<excludes>**/BoardTest.java</excludes>-->
 
