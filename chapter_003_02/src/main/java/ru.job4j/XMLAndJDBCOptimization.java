@@ -20,72 +20,91 @@ import java.sql.*;
 //        1. блок чтения
 //        2. запись в базу
 //        3. xslt.
+//WORK ON BUGS2
+//РАЗБИТЬ НА КЛАССЫ
 public class XMLAndJDBCOptimization implements Serializable {
-
-    private String url;
-
-    private String username;
-    private String password;
-    private int n;
-
-    private Connection conn;
-    private long start;
-
-    public XMLAndJDBCOptimization(String url, String username, String password, int n) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-        this.n = n;
-
-        try {
-            conn = DriverManager.getConnection(this.getUrl(), this.getUsername(), this.getPassword());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
 
-        XMLAndJDBCOptimization xmlAndJDBCOptimization = new XMLAndJDBCOptimization(
-                "jdbc:postgresql://localhost:5432/SQLite", "postgres", "password", 100000);
-        xmlAndJDBCOptimization.start = System.currentTimeMillis();
-        int n = xmlAndJDBCOptimization.getN(); // 1000000;
+        long start = System.currentTimeMillis();
 
-        Connection conn = xmlAndJDBCOptimization.getConn();
 
-        xmlAndJDBCOptimization.createAndFillBase(xmlAndJDBCOptimization);
-        xmlAndJDBCOptimization.createFirstXML(xmlAndJDBCOptimization);
-        xmlAndJDBCOptimization.createSecondXMLFromFirstXMLByXSLConvertation(xmlAndJDBCOptimization);
-        xmlAndJDBCOptimization.getArithmeticSummAndDeleteAllFiles(xmlAndJDBCOptimization);
+//        try(тут объявляются ресурсы){
+//    ...
+//    ...
+//        }catch(Exception ex){
+//    ...
+//        }finally{
+//    ...
+//        }
 
         try {
-            xmlAndJDBCOptimization.conn.close();
+
+            Connection connection = new MyConnection("jdbc:postgresql://localhost:5432/SQLite", "postgres",
+                    "password").getConnection();
+
+            new CreateAndFillBase(connection, 100000).createAndFillBase();
+
+            new CreateFirstXML(connection).createFirstXML();
+
+            new CreateSecondXMLFromFirstXMLByXSLConvertation().createSecondXMLFromFirstXMLByXSLConvertation();
+
+            new GetArithmeticSummAndDeleteAllFiles().getArithmeticSummAndDeleteAllFiles();
+
+            connection.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        long finish = System.currentTimeMillis();
+        long timeConsumedMillis = finish - start;
+        System.out.println("Total time in sec. = " + timeConsumedMillis / 1000);
+    }
+}
+
+class MyConnection {
+
+    private String url;
+    private String username;
+    private String password;
+
+    public MyConnection(String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
 
-    public long getStart() {
-        return start;
-    }
+    public Connection getConnection() {
+        Connection conn = null;
 
-    public XMLAndJDBCOptimization() {
-
-    }
-
-    public void setStart(long start) {
-        this.start = start;
-    }
-
-    public Connection getConn() {
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return conn;
     }
+}
 
-    public void setConn(Connection conn) {
+class CreateAndFillBase {
+
+    private Connection conn;
+    private int n;
+
+    public CreateAndFillBase(Connection conn, int numberOfRows) {
+        this.conn = conn;
+        this.n = numberOfRows;
+    }
+
+    public CreateAndFillBase() {
+    }
+
+    public CreateAndFillBase(Connection conn) {
         this.conn = conn;
     }
 
-    private ResultSet readFromBase(String query) {
+    ResultSet readFromBase(String query) {
         Statement st = null;
         try {
             st = conn.createStatement();
@@ -101,7 +120,7 @@ public class XMLAndJDBCOptimization implements Serializable {
         return rs;
     }
 
-    private void writeInBase(String query) {
+    void writeInBase(String query) {
         Statement st = null;
         try {
             st = conn.createStatement();
@@ -139,49 +158,36 @@ public class XMLAndJDBCOptimization implements Serializable {
         return count;
     }
 
-    private void createAndFillBase(XMLAndJDBCOptimization xmlAndJDBCOptimization) {
-
+    public void createAndFillBase() {
         try {
             Statement st = conn.createStatement();
             conn.setAutoCommit(false); //55.55
 
-            ResultSet rs = xmlAndJDBCOptimization.readFromBase("SELECT * FROM TEST");
+            ResultSet rs = readFromBase("SELECT * FROM TEST");
 
             if (rs == null) {
-                xmlAndJDBCOptimization.writeInBase("CREATE TABLE TEST (FIELD INTEGER )");
-                xmlAndJDBCOptimization.writeInBase("insert into TEST (FIELD) values (1)");
-                rs = xmlAndJDBCOptimization.readFromBase("SELECT * FROM TEST");
+                writeInBase("CREATE TABLE TEST (FIELD INTEGER )");
+                writeInBase("insert into TEST (FIELD) values (1)");
+                rs = readFromBase("SELECT * FROM TEST");
             }
 
-            System.out.println("1 SELECT * FROM TEST time: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
             if (rs.next()) {
-                xmlAndJDBCOptimization.writeInBase("delete  from TEST");
+                writeInBase("delete  from TEST");
             }
-            System.out.println("2 delete  from TEST time: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
-
-            int[] count = xmlAndJDBCOptimization.executeBatchInBase(); //st.executeBatch();
+            int[] count = executeBatchInBase(); //st.executeBatch();
 
             conn.commit();
-
-            System.out.println("4 execute query  time: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
             System.out.println("number of created rows: " + count.length);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
+}
 
-    private void createFolderForTask() {
-        File file = new File("task20459");
-        if (!file.exists()) {
-            file.mkdir();
-        }
-    }
+class CreateSecondXMLFromFirstXMLByXSLConvertation {
 
-    private void createSecondXMLFromFirstXMLByXSLConvertation(XMLAndJDBCOptimization xmlAndJDBCOptimization) {
-
+    void createSecondXMLFromFirstXMLByXSLConvertation() {
         try {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("task20459\\xslttest.xsl"), "utf-8"))) {
@@ -223,118 +229,85 @@ public class XMLAndJDBCOptimization implements Serializable {
             e.printStackTrace();
         }
         System.out.println("File2 saved!");
-        System.out.println("7 time: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
-
     }
 
-    private void getArithmeticSummAndDeleteAllFiles(XMLAndJDBCOptimization xmlAndJDBCOptimization) {
+}
 
-        //++++5. Приложение парсит "2.xml" и выводит арифметическую сумму значений всех атрибутов field в консоль.
-        int arithmeticSumm = 0;
-        File f = new File("task20459\\2.xml");
-        FileReader r = null;
-        try {
-            r = new FileReader(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+class CreateFirstXML {
+
+    Connection connection;
+
+    public CreateFirstXML(Connection connection) {
+        this.connection = connection;
+    }
+
+    private void createFolderForTask() {
+        File file = new File("task20459");
+        if (!file.exists()) {
+            file.mkdir();
         }
-        BufferedReader br = new BufferedReader(r);
-        String line = null;
+    }
+
+    void createFirstXML() {
         try {
-            line = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        final char dm = (char) 34;
-        try {
-            while (null != (line = br.readLine())) {
-                String[] arraySting = line.split("ield=" + dm);
-                if (arraySting.length == 1) {
-                    continue;
+            ResultSet rs = new CreateAndFillBase(connection).readFromBase("SELECT * FROM TEST");
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = null;
+            try {
+                docBuilder = docFactory.newDocumentBuilder();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+            // root elements
+            Document doc = docBuilder.newDocument();
+            Element rootElement = doc.createElement("entries");
+            doc.appendChild(rootElement);
+            try {
+                while (rs.next()) {
+                    Element entry = doc.createElement("entry");
+                    rootElement.appendChild(entry);
+                    Element field = doc.createElement("field");
+                    field.appendChild(doc.createTextNode(String.valueOf(rs.getInt("FIELD"))));
+                    entry.appendChild(field);
                 }
-                String[] arraySting2 = arraySting[1].split(dm + "/>");
-                int resultValue = Integer.valueOf(arraySting2[0]);
-                arithmeticSumm = arithmeticSumm + resultValue;
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            r.close(); // без этого не удавалось удалить папку
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("8 time of parsing: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
-        System.out.println("arithmeticSumm = [" + arithmeticSumm + "]");
-        //----5. Приложение парсит "2.xml" и выводит арифметическую сумму значений всех атрибутов field в консоль.
-        long finish = System.currentTimeMillis();
-        long timeConsumedMillis = finish - xmlAndJDBCOptimization.start;
 
-        recursiveDelete(new File("task20459"));
+            createFolderForTask();
 
-        System.out.println("Total time in sec. = " + timeConsumedMillis / 1000);
-
-    }
-
-    private void createFirstXML(XMLAndJDBCOptimization xmlAndJDBCOptimization) {
-        ResultSet rs = xmlAndJDBCOptimization.readFromBase("SELECT * FROM TEST");
-        System.out.println("5 SELECT * FROM TEST  time: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = null;
-        try {
-            docBuilder = docFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-        // root elements
-        Document doc = docBuilder.newDocument();
-        Element rootElement = doc.createElement("entries");
-        doc.appendChild(rootElement);
-        try {
-            while (rs.next()) {
-                Element entry = doc.createElement("entry");
-                rootElement.appendChild(entry);
-                Element field = doc.createElement("field");
-                field.appendChild(doc.createTextNode(String.valueOf(rs.getInt("FIELD"))));
-                entry.appendChild(field);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = null;
+            try {
+                transformer = transformerFactory.newTransformer();
+            } catch (TransformerConfigurationException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("task20459\\1.xml"));
+            try {
+                transformer.transform(source, result);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            System.out.println("File saved!");
+            //-
 
-        xmlAndJDBCOptimization.createFolderForTask();
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = null;
-        try {
-            transformer = transformerFactory.newTransformer();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        }
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File("task20459\\1.xml"));
-        try {
-            transformer.transform(source, result);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        System.out.println("File saved!");
-        System.out.println("6 time: " + (xmlAndJDBCOptimization.start - System.currentTimeMillis()) / 1000);
-        //-
-        try {
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+}
+
+class GetArithmeticSummAndDeleteAllFiles {
+
     public static void recursiveDelete(File file) {
         // до конца рекурсивного цикла
         if (!file.exists()) {
             return;
         }
-
-
         //если это папка, то идем внутрь этой папки и вызываем рекурсивное удаление всего, что там есть
         if (file.isDirectory()) {
             for (File f : file.listFiles()) {
@@ -347,82 +320,46 @@ public class XMLAndJDBCOptimization implements Serializable {
         System.out.println("Удаленный файл или папка: " + file.getAbsolutePath());
     }
 
-    @Override
-    public String toString() {
-        return "XMLAndJDBCOptimization{"
-                +
-                "url='" + url + '\''
-                +
-                ", username='" + username + '\''
-                +
-                ", password='" + password + '\''
-                +
-                ", n=" + n
-                +
-                '}';
-    }
+    public void getArithmeticSummAndDeleteAllFiles() {
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        //++++5. Приложение парсит "2.xml" и выводит арифметическую сумму значений всех атрибутов field в консоль.
+        int arithmeticSumm = 0;
+        File f = new File("task20459\\2.xml");
+        try {
+            FileReader r = null;
+            try {
+                r = new FileReader(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            BufferedReader br = new BufferedReader(r);
+            String line = null;
+            try {
+                line = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            final char dm = (char) 34;
+            try {
+                while (null != (line = br.readLine())) {
+                    String[] arraySting = line.split("ield=" + dm);
+                    if (arraySting.length == 1) {
+                        continue;
+                    }
+                    String[] arraySting2 = arraySting[1].split(dm + "/>");
+                    int resultValue = Integer.valueOf(arraySting2[0]);
+                    arithmeticSumm = arithmeticSumm + resultValue;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            r.close(); // без этого не удавалось удалить папку
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        XMLAndJDBCOptimization that = (XMLAndJDBCOptimization) o;
-
-        if (n != that.n) {
-            return false;
-        }
-        if (url != null ? !url.equals(that.url) : that.url != null) {
-            return false;
-        }
-        if (username != null ? !username.equals(that.username) : that.username != null) {
-            return false;
-        }
-        return password != null ? password.equals(that.password) : that.password == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = url != null ? url.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + n;
-        return result;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getN() {
-        return n;
-    }
-
-    public void setN(int n) {
-        this.n = n;
+        System.out.println("arithmeticSumm = [" + arithmeticSumm + "]");
+        long finish = System.currentTimeMillis();
+        recursiveDelete(new File("task20459"));
     }
 }
