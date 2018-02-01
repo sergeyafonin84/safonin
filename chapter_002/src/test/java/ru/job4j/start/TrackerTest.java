@@ -17,10 +17,11 @@ public class TrackerTest {
     /**
      * test add, edit methods and test inheritance/incapsulation.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void whenUpdateNameThenReturnNewName() {
         Tracker tracker = new Tracker();
+        tracker.initTracker();
         Item previous = new Task("test1", "testDescription", 123L);
         // Добавляем заявку в трекер. Теперь в объект проинициализирован id.
         tracker.add(previous);
@@ -32,41 +33,50 @@ public class TrackerTest {
         tracker.edit(next);
         // Проверяем, что заявка с таким id имеет новые имя test2.
         assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
 
     /**
      * test add method.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
         Tracker tracker = new Tracker();
+        tracker.initTracker();
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
         assertThat(tracker.getAll()[0], is(item));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
 
     /**
      * test update method.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void whenUpdateItemThenReturnNewItem() {
         Tracker tracker = new Tracker();
+        tracker.initTracker();
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
         item.setDescription("testDescription2");
         tracker.update(item);
         assertThat(tracker.findById(item.getId()).getDescription(), is("testDescription2"));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
 
     /**
      * test delete method.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void whenDeleteItemThenReturnNull() {
         Tracker tracker = new Tracker();
+        tracker.initTracker();
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
         Item item2 = new Item("test2", "testDescription2", 333L);
@@ -76,15 +86,18 @@ public class TrackerTest {
 
         Item impliedValue = null;
         assertThat(tracker.findById(item.getId()), is(impliedValue));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
 
     /**
      * test findAll method.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void  whenFindAllItemsThenReturnNotNullItems() {
         Tracker tracker = new Tracker();
+        tracker.initTracker();
 
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
@@ -103,14 +116,17 @@ public class TrackerTest {
         impliedArrayOfItems[1] = item4;
 
         assertThat(tracker.findAll(), is(impliedArrayOfItems));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
     /**
      * test findByName method.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void whenFindByNameThenReturnOnlyWtihTheSameNameItems() {
         Tracker tracker = new Tracker();
+        tracker.initTracker();
 
         Item item = new Item("keyName", "testDescription", 123L);
         tracker.add(item);
@@ -121,24 +137,24 @@ public class TrackerTest {
         Item item4 = new Item("keyName", "testDescription4", 444L);
         tracker.add(item4);
 
-//        Item[] impliedArrayOfItems = new Item[2];
-//        impliedArrayOfItems[0] = item;
-//        impliedArrayOfItems[1] = item4;
         ArrayList<Item> impliedArrayOfItems = new ArrayList<Item>();
         impliedArrayOfItems.add(item);
         impliedArrayOfItems.add(item4);
 
         assertThat(tracker.findByName("keyName"), is(impliedArrayOfItems));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
 
     /**
      * test findById method.
      */
-    @Ignore
+//    @Ignore
     @Test
     public void whenFinkByIdThenReturnOnlyOneElementWithTheSameId() {
 
         Tracker tracker = new Tracker();
+        tracker.initTracker();
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
         Item expecteItem = new Item("test2", "testDescription2", 333L);
@@ -147,5 +163,7 @@ public class TrackerTest {
         String idExpectedItem = expecteItem.getId();
 
         assertThat(tracker.findById(idExpectedItem), is(expecteItem));
+
+        tracker.trackerSQL.deleteAllItemsFromBase();
     }
 }

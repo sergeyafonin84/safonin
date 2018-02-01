@@ -20,24 +20,33 @@ public class TrackerSQL {
     }
 
     public TrackerSQL() {
+    }
 
+    public void initTrackerSQL() {
         this.url = "jdbc:postgresql://localhost:5432/Tracker";
         this.username = "postgres";
         this.password = "password";
         this.getConn();
-
-        this.deleteAllItemsFromBase();
     }
 
-    private void deleteAllItemsFromBase() {
+    ResultSet readFromBase(String query) {
 
-        ResultSet rs;
-        try {
-            Statement st = this.conn.createStatement();
-            rs = st.executeQuery("select * from items");
+        ResultSet rs = null;
+        try (Statement st = this.conn.createStatement()) {
+            rs = st.executeQuery(query);
         } catch (SQLException e) {
-            try {
-                Statement st = this.conn.createStatement();
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public void deleteAllItemsFromBase() {
+
+        ResultSet rs = readFromBase("select * from items");
+
+        if (rs == null) {
+
+            try (Statement st = this.conn.createStatement()) {
                 st.execute("create table items (\n"
                         + "idsql text,\n"
                         + "name text,\n"
@@ -48,21 +57,28 @@ public class TrackerSQL {
 
                 e1.printStackTrace();
             }
-//            e.printStackTrace();
-            System.out.println("Create table items");
         }
-
-        this.executeInsertOrDelete("delete  from items");
+        this.executeDelete("delete  from items");
     }
 
     public void getConn() {
 
         try {
-            this.conn = DriverManager.getConnection(this.getUrl(), this.getUsername(), this.getPassword());
+            this.conn = DriverManager.getConnection(this.url, this.username, this.password);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public ResultSet executeQueryNew(String query) {
+        ResultSet rs = null;
+        try (Statement st = conn.createStatement()) {
+            rs = st.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     public ResultSet executeQuery(String query) {
@@ -77,9 +93,17 @@ public class TrackerSQL {
         return rs;
     }
 
-    public void executeInsertOrDelete(String query) {
-        try {
-            Statement st = conn.createStatement();
+
+    public void executeInsert(String query) {
+        try (Statement st = conn.createStatement()) {
+            st.execute(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void executeDelete(String query) {
+        try (Statement st = conn.createStatement()) {
             st.execute(query);
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,20 +115,21 @@ public class TrackerSQL {
         String query = "insert into items(name, description, createsql, idsql) values('" + item.getName() + "', '"
                 + item.getDescription() + "', '" + item.getCreateSql() + "', '" + item.getId() + "');";
 
-        this.executeInsertOrDelete(query);
+        this.executeInsert(query);
 
     }
 
     public void editSql(Item item) {
+
         String id = item.getId();
 
         String query = "update items set name = '" + item.getName() + "' where idsql='" + id + "';";
 
-        this.executeInsertOrDelete(query);
-
         String query2 = "update items set description = '" + item.getDescription() + "' where idsql='" + id + "';";
 
-        this.executeInsertOrDelete(query2);
+        this.executeInsert(query);
+
+        this.executeInsert(query2);
     }
 
     public void updateSql(Item item) {
@@ -115,25 +140,30 @@ public class TrackerSQL {
 
         String query = "delete from items where idsql = '" + item.getId() + "';";
 
-        this.executeInsertOrDelete(query);
+        this.executeDelete(query);
 
     }
 
     public Item findByIdSql(String id) {
-        Item item = null; //new Item();
+
+        Item item = null;
         String query = "select * from items where idsql = '" + id + "'";
-        ResultSet resultSet = this.executeQuery(query);
-        try {
-            if (resultSet.next()) {
-                item = getItemFromResultSet(resultSet);
+
+        ResultSet rs = null;
+        try (Statement st = conn.createStatement()) {
+            rs = st.executeQuery(query);
+
+            if (rs.next()) {
+                item = getItemFromResultSet(rs);
+                return item;
+            } else {
                 return item;
             }
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
-            return item;
-        } finally {
-            return item;
         }
+        return item;
     }
 
     private Item getItemFromResultSet(ResultSet resultSet) {
@@ -223,5 +253,4 @@ public class TrackerSQL {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
