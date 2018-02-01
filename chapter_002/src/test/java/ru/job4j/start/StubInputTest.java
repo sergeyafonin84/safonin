@@ -14,7 +14,7 @@ public class StubInputTest {
     /**
      *
      */
-//    @Ignore
+    @Ignore
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();     // создаём Tracker
@@ -29,7 +29,7 @@ public class StubInputTest {
     /**
      *
      */
-//    @Ignore
+    @Ignore
     @Test
     public void whenUpdateThenTrackerHasUpdatedValue() {
         // создаём Tracker
@@ -52,7 +52,7 @@ public class StubInputTest {
     /**
      *
      */
-//    @Ignore
+    @Ignore
     @Test
     public void whenDeleteThenTrackerHasDeletedItem() {
         Tracker tracker = new Tracker();
@@ -89,7 +89,7 @@ public class StubInputTest {
     /**
      *
      */
-//    @Ignore
+    @Ignore
     @Test
     public void whenFindByIdThenHasItemWhichWeCanEditForExampleAndCanSeeThanInConsole() {
         Tracker tracker = new Tracker();
@@ -112,7 +112,7 @@ public class StubInputTest {
     /**
      *
      */
-//    @Ignore
+    @Ignore
     @Test
     public void whenFindItemsByNameThenWeCanSeeInConsole() {
         Tracker tracker = new Tracker();
@@ -127,7 +127,7 @@ public class StubInputTest {
     /**
      *
      */
-//    @Ignore
+    @Ignore
     @Test
     public void whenExitProgramThenWeSeeThat() {
         Tracker tracker = new Tracker();
