@@ -12,6 +12,9 @@ public class SQLStorage {
 
     public static void main(String[] args) {
 
+
+        Log.info("asdf");
+
         String url = "jdbc:postgresql://localhost:5432/java_a_from_z";
 //        Properties props = new Properties();
 //        props.setProperty("user","fred");
