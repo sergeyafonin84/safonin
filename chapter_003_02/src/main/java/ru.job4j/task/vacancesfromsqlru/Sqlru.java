@@ -19,7 +19,7 @@ public class Sqlru implements Job {
      * sqlru.executeProgram();
      */
     public static void main(String[] args) {
-        schedulerEveryDayInAppropriateTimaRunTaskSqlru("12", "23");
+        schedulerEveryDayInAppropriateTimaRunTaskSqlru("18", "18");
     }
 
     private static void schedulerEveryDayInAppropriateTimaRunTaskSqlru(String hour, String minute) {
