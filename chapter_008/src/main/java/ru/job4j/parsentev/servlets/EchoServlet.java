@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author afonin
@@ -17,13 +19,23 @@ import java.io.PrintWriter;
 public class EchoServlet extends HttpServlet {
 //    private static final Logger Log = LoggerFactory.getLogger(EchoServlet.class);
 
+    private List<String> users = new CopyOnWriteArrayList<>();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doGet(req, resp);
         resp.setContentType("text/html");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        resp.getOutputStream().write("hello word.".getBytes());
+        writer.append("hello word." + this.users);
         writer.flush();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+        this.users.add(req.getParameter("login"));
+        this.doGet(req, resp);
+
     }
 }
 
