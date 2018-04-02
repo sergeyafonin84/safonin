@@ -1,9 +1,6 @@
 package ru.job4j.crudservlet;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 class WorkWithDataBase {
@@ -28,10 +25,13 @@ class WorkWithDataBase {
 
     void deleleUsersByLogin(String login) {
         this.createTablesIfNotExist();
-        String query = "delete from users as u where u.login = '" + login + "'";
-        try (Statement st = conn.createStatement()) {
-            st.execute(query);
-        } catch (Exception e) {
+        String query = "delete from users as u where u.login = ?";
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(query);
+            st.setString(1, login);
+            st.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -50,6 +50,29 @@ class WorkWithDataBase {
 
         ArrayList<User> users = new ArrayList<>();
         String query = "SELECT * FROM users AS u WHERE u.login = '" + login + "'";
+
+        this.createTablesIfNotExist();
+
+        try (Statement st = this.conn.createStatement()) {
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                User user = new User();
+                user.name = rs.getString("name");
+                user.login = rs.getString("login");
+                user.email = rs.getString("email");
+                user.createDate = rs.getTimestamp("createDate").toLocalDateTime();
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+        }
+        return users;
+    }
+
+    ArrayList<User> getAllUsers() {
+
+        ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users";
 
         this.createTablesIfNotExist();
 
