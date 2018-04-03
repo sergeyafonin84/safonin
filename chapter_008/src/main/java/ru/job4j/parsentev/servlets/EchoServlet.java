@@ -85,8 +85,11 @@ public class EchoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        this.users.add(req.getParameter("login"));
-        this.doGet(req, resp);
+        UserStorage.getInstance().add(new User(req.getParameter("login"),
+                req.getParameter("email")));
+//        this.users.add(req.getParameter("login"));
+//        this.doGet(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/index.jsp");
 
     }
 }
