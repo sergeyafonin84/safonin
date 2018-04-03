@@ -1,5 +1,6 @@
 package ru.job4j.crudservlet;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class UserStoreTest {
 
+    @Ignore
     @Test
     public void whenAddUserThenThereIsThisUserInUsers() {
 
@@ -24,7 +26,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-
+    @Ignore
     @Test
     public void whenAddTheSameLoginUserThenThenTheNumberOfUserNoChange() {
 
@@ -40,7 +42,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-
+    @Ignore
     @Test
     public void whenDeleteUserThenThereIsNoThisUser() {
 
@@ -57,7 +59,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-
+    @Ignore
     @Test
     public void whenEditUserThenThereIsThisUserIsEdited() {
 
