@@ -48,8 +48,8 @@ public class DeleteUserServlet extends HttpServlet {
                 +
                 "</form>"
                 +
-//                "<a href='http://localhost:8080/items/NewUsersServlet'>Back</a>"
-                "<a href='http://localhost:8080/items/'>Back</a>"
+                "<a href='http://localhost:8080/items/NewUsersServlet'>Back</a>"
+//                "<a href='http://localhost:8080/items/'>Back</a>"
                 +
                 "</br>"
                 +
