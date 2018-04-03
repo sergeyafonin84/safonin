@@ -88,7 +88,7 @@ public class UserStore {
         return  workWithDataBase.getUsers(login);
     }
 
-    private ArrayList<User> getAllSql() {
+    public ArrayList<User> getAllSql() {
         return  workWithDataBase.getAllUsers();
     }
 
