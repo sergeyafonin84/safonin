@@ -1,55 +1,50 @@
 package ru.job4j.workwithusersservlet;
 
-import ru.job4j.crudservlet.User;
 import ru.job4j.crudservlet.UserStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
-public class AddUserServlet extends HttpServlet {
+public class AddRoleServlet extends HttpServlet {
 
     private final UserStore users = UserStore.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("AddUserServlet doGet");
-        req.setAttribute("users", UserStore.getInstance().getAllSql());
-        req.getRequestDispatcher("/WEB-INF/views/NewAddUser.jsp").forward(req, resp);
+        System.out.println("AddRoleServlet doGet");
+        req.setAttribute("roles", UserStore.getInstance().getAllRolesSql());
+        req.getRequestDispatcher("/WEB-INF/views/AddRole.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("AddUserServlet doPost01");
+        System.out.println("AddRoleServlet doPost01");
 
         String back = req.getParameter("Back"); // gi
 
         String currUserLogin = (String) req.getSession().getAttribute("login");
 
-        String name = req.getParameter("name");
-        String login = req.getParameter("login");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+        String rolename = req.getParameter("rolename");
+        String userlogin = req.getParameter("userlogin");
 
         System.out.println("Back = " + back + LocalDateTime.now());
 
         if (back == null) {
-            if (login.equals("") || name.equals("") || email.equals("") || password.equals("")) {
+            if (rolename.equals("") || userlogin.equals("")) {
                 req.setAttribute("error", "You must fill all fields!");
                 this.doGet(req, resp);
             } else {
                 if (currUserLogin.equals("root")) {
-                    System.out.println("AddUserServlet doPost02");
+                    System.out.println("AddRoleServlet doPost02");
                     resp.setContentType("text/html");
-                    UserStore.getInstance().addSql(new User(name, login, email, password, LocalDateTime.now()));
+                    UserStore.getInstance().addRoleSql(new Role(rolename, userlogin));
                     this.doGet(req, resp);
                 } else {
-                    req.setAttribute("error", "For add user you must have the root role!");
+                    req.setAttribute("error", "For add role you must have the root role!");
                     this.doGet(req, resp);
                 }
             }

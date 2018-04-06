@@ -1,5 +1,15 @@
 <web-app>
 
+    <filter>
+        <filter-name>NewAuthFilter</filter-name>
+        <filter-class>ru.job4j.workwithusersservlet.NewAuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>NewAuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>NewUsersServlet</servlet-name>
         <servlet-class>ru.job4j.workwithusersservlet.NewUsersServlet</servlet-class>
@@ -8,7 +18,17 @@
 
     <servlet-mapping>
         <servlet-name>NewUsersServlet</servlet-name>
-        <url-pattern>/NewUsersServlet</url-pattern>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>NewSignin</servlet-name>
+        <servlet-class>ru.job4j.workwithusersservlet.NewSigninController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>NewSignin</servlet-name>
+        <url-pattern>/newsignin</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -53,6 +73,28 @@
     <servlet-mapping>
         <servlet-name>GetUserServlet</servlet-name>
         <url-pattern>/GetUserServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddRoleServlet</servlet-name>
+        <servlet-class>ru.job4j.workwithusersservlet.AddRoleServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddRoleServlet</servlet-name>
+        <url-pattern>/AddRoleServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteRoleServlet</servlet-name>
+        <servlet-class>ru.job4j.workwithusersservlet.DeleteRoleServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DeleteRoleServlet</servlet-name>
+        <url-pattern>/DeleteRoleServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

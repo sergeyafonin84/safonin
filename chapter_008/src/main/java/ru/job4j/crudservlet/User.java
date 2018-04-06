@@ -6,12 +6,16 @@ public class User {
     String name;
     String login;
     String email;
+    private String password;
+
     LocalDateTime createDate;
 
-    public User(String name, String login, String email) {
+    public User(String name, String login, String email, String password, LocalDateTime createDate) {
         this.name = name;
         this.login = login;
         this.email = email;
+        this.password = password;
+        this.createDate = createDate;
 
     }
 
@@ -25,6 +29,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public User() {

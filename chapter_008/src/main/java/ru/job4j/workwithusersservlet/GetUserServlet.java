@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDateTime;
 
 public class GetUserServlet extends HttpServlet {
 
@@ -15,50 +15,26 @@ public class GetUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String userLogin = req.getParameter("userLogin");
-        String listOfUsers;
-
-        userLogin  = userLogin == null ? ("") : (userLogin);
-
-        resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-
-        StringBuilder sb = new StringBuilder("<table>");
-
-        listOfUsers = this.users.getAll()
-                + " QuontityOfUsers = " + this.users.getQuontityOfUsers();
-
-        writer.append("<!DOCTYPE html>"
-                +
-                "<html lang=\"en\">"
-                +
-                "<head>"
-                +
-                "    <meta charset=\"UTF-8\">"
-                +
-                "    <title>Title</title>"
-                +
-                "</head>"
-                +
-                "<body>"
-                +
-                "<a href='http://localhost:8080/items/NewUsersServlet'>Back</a>"
-//                "<a href='http://localhost:8080/items/'>Back</a>"
-                +
-                "</br>"
-                +
-                listOfUsers
-                +
-                "</body>"
-                +
-                "</html>");
-        writer.flush();
+        System.out.println("GetUserServlet doGet");
+        req.setAttribute("users", UserStore.getInstance().getAllSql());
+        req.getRequestDispatcher("/WEB-INF/views/NewGetUserView.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        this.doGet(req, resp);
+
+        System.out.println("GetUserServlet doPost01");
+
+        String back = req.getParameter("Back");
+
+        System.out.println("Back = " + back + LocalDateTime.now());
+
+        if (back == null) {
+                System.out.println("GetUserServlet doPost02");
+                resp.setContentType("text/html");
+                this.doGet(req, resp);
+            } else {
+            resp.sendRedirect(req.getContextPath() + "/");
+        }
     }
 }

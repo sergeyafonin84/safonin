@@ -1,5 +1,7 @@
 package ru.job4j.crudservlet;
 
+import java.time.LocalDateTime;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -10,7 +12,7 @@ import static org.junit.Assert.assertThat;
 
 public class UserStoreTest {
 
-    @Ignore
+//    @Ignore
     @Test
     public void whenAddUserThenThereIsThisUserInUsers() {
 
@@ -26,7 +28,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-    @Ignore
+//    @Ignore
     @Test
     public void whenAddTheSameLoginUserThenThenTheNumberOfUserNoChange() {
 
@@ -42,7 +44,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-    @Ignore
+//    @Ignore
     @Test
     public void whenDeleteUserThenThereIsNoThisUser() {
 
@@ -59,7 +61,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-    @Ignore
+//    @Ignore
     @Test
     public void whenEditUserThenThereIsThisUserIsEdited() {
 
@@ -67,7 +69,9 @@ public class UserStoreTest {
 
         userStore.workWithDataBase.deleleALLUsers();
 
-        User theSameUser = new User("nameEdited", "login2", "emailEdited");
+
+
+        User theSameUser = new User("nameEdited", "login2", "emailEdited", "password", LocalDateTime.now());
 
         userStore.add("name1", "login1", "email1");
         userStore.add("name2", "login2", "email2");

@@ -2,6 +2,7 @@ package ru.job4j.crudservlet;
 
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import ru.job4j.workwithusersservlet.DataSource;
+import ru.job4j.workwithusersservlet.Role;
 
 import java.beans.PropertyVetoException;
 import java.io.IOException;
@@ -22,7 +23,13 @@ public class UserStore {
 //        this.getInitConnectionJNDI();
         //this.getInitConnection();
         workWithDataBase = new WorkWithDataBase(connection);
+        workWithDataBase.deleleALLRoles();
         workWithDataBase.deleleALLUsers();
+
+        this.addSql(new User("root", "root", "root@root", "root", LocalDateTime.now()));
+        this.addSql(new User("user1", "user1", "user1@user1", "user1", LocalDateTime.now()));
+        this.addRoleSql(new Role("root", "root"));
+        this.addRoleSql(new Role("user1", "user1"));
     }
 
     public static UserStore getInstance() {
@@ -64,8 +71,6 @@ public class UserStore {
         p.setUsername("postgres");
         p.setPassword("password");
 
-
-
         org.apache.tomcat.jdbc.pool.DataSource datasource = new org.apache.tomcat.jdbc.pool.DataSource();
         datasource.setPoolProperties(p);
 
@@ -80,9 +85,16 @@ public class UserStore {
         return connection;
     }
 
-    private void addSql(User user) {
+    public void addSql(User user) {
         workWithDataBase.addUser(user);
     }
+
+    public void addRoleSql(Role role) {
+        workWithDataBase.addRole(role);
+    }
+
+
+
 
     private ArrayList<User> getSql(String login) {
         return  workWithDataBase.getUsers(login);
@@ -91,6 +103,12 @@ public class UserStore {
     public ArrayList<User> getAllSql() {
         return  workWithDataBase.getAllUsers();
     }
+
+    public ArrayList<Role> getAllRolesSql() {
+        return  workWithDataBase.getAllRoles();
+    }
+
+
 
     public void add(String name, String login, String email) {
         if (this.get(login).equals("")) {
@@ -149,12 +167,20 @@ public class UserStore {
         workWithDataBase.deleleUsersByLogin(login);
     }
 
-    public void edit(String name, String login, String email) {
-        this.editSql(name, login, email);
+    public void deleteRole(String rolename, String userlogin) {
+        workWithDataBase.deleleRoleByRoleNameAndUserLogin(rolename, userlogin);
     }
 
-    public void editSql(String name, String login, String email) {
-       workWithDataBase.editUser(name, login, email);
+    public void edit(String name, String login, String email) {
+        this.editSqlOld(name, login, email);
+    }
+
+    public void editSqlOld(String name, String login, String email) {
+       workWithDataBase.editUserOld(name, login, email);
+    }
+
+    public void editSql(String name, String login, String email, String password) {
+        workWithDataBase.editUser(name, login, email, password);
     }
 
     public Integer getQuontityOfUsers() {
@@ -164,4 +190,16 @@ public class UserStore {
     public Integer getQuontityOfUsersSql() {
         return workWithDataBase.getQuontityOfUsers();
     }
+
+    public boolean isCredentional(String login, String password) {
+        boolean exists = false;
+        for (User user : this.getAllSql()) {
+            if (user.getLogin().equals(login) && (user.getPassword() == null || user.getPassword().equals(password))) {
+                exists = true;
+                break;
+            }
+        }
+        return exists;
+    }
+
 }
