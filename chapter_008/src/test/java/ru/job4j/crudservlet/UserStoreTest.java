@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 
 public class UserStoreTest {
 
-//    @Ignore
+    @Ignore
     @Test
     public void whenAddUserThenThereIsThisUserInUsers() {
 
@@ -28,7 +28,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-//    @Ignore
+    @Ignore
     @Test
     public void whenAddTheSameLoginUserThenThenTheNumberOfUserNoChange() {
 
@@ -44,7 +44,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-//    @Ignore
+    @Ignore
     @Test
     public void whenDeleteUserThenThereIsNoThisUser() {
 
@@ -61,7 +61,7 @@ public class UserStoreTest {
 
         assertThat(numOfUsers, is(expectedNumOfUsers));
     }
-//    @Ignore
+    @Ignore
     @Test
     public void whenEditUserThenThereIsThisUserIsEdited() {
 
