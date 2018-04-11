@@ -2,10 +2,12 @@ package ru.job4j.workwithusersservlet;
 
 import ru.job4j.crudservlet.UserStore;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -18,7 +20,8 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("DeleteUserServlet doGet");
         req.setAttribute("users", UserStore.getInstance().getAllSql());
-        req.getRequestDispatcher("/WEB-INF/views/NewDeleteUserView.jsp").forward(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/NewDeleteUserView.jsp");
+        requestDispatcher.forward(req, resp);
     }
 
     @Override
@@ -28,7 +31,8 @@ public class DeleteUserServlet extends HttpServlet {
 
         String back = req.getParameter("Back"); // gi
 
-        String currUserLogin = (String) req.getSession().getAttribute("login");
+        HttpSession session = req.getSession();
+        String currUserLogin = (String) session.getAttribute("login");
 
         String login = req.getParameter("login");
 

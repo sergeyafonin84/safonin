@@ -3,6 +3,7 @@ package ru.job4j.workwithusersservlet;
 import ru.job4j.crudservlet.User;
 import ru.job4j.crudservlet.UserStore;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,16 +21,19 @@ public class AddUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("AddUserServlet doGet");
         req.setAttribute("users", UserStore.getInstance().getAllSql());
-        req.getRequestDispatcher("/WEB-INF/views/NewAddUser.jsp").forward(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/NewAddUser.jsp");
+        requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         System.out.println("AddUserServlet doPost01");
 
         String back = req.getParameter("Back"); // gi
 
-        String currUserLogin = (String) req.getSession().getAttribute("login");
+        HttpSession session = req.getSession();
+        String currUserLogin = (String) session.getAttribute("login");
 
         String name = req.getParameter("name");
         String login = req.getParameter("login");

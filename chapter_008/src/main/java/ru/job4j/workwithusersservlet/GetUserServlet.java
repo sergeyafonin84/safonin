@@ -2,6 +2,7 @@ package ru.job4j.workwithusersservlet;
 
 import ru.job4j.crudservlet.UserStore;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,8 @@ public class GetUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("GetUserServlet doGet");
         req.setAttribute("users", UserStore.getInstance().getAllSql());
-        req.getRequestDispatcher("/WEB-INF/views/NewGetUserView.jsp").forward(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/NewGetUserView.jsp");
+        requestDispatcher.forward(req, resp);
     }
 
     @Override

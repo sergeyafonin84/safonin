@@ -200,8 +200,28 @@ class WorkWithDataBase {
         }
     }
 
+    void createTableRolesIfNotExist() {
+        ResultSet rs = readFromBase("select * from roles");
+        if (rs == null) {
+            try (Statement st = this.conn.createStatement()) {
+                st.execute("CREATE TABLE roles (\n"
+                        +
+                        "rolename VARCHAR,\n"
+                        +
+                        "userlogin VARCHAR REFERENCES users (login)\n"
+                        +
+                        ");");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+
+
     private void createTablesIfNotExist() {
         this.createTableUsersIfNotExist();
+        this.createTableRolesIfNotExist();
     }
 
     ResultSet readFromBase(String query) {
