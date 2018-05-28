@@ -18,7 +18,7 @@ public class UserStoreTest {
 
         UserStore userStore = UserStore.getInstance();
 
-        userStore.workWithDataBase.deleleALLUsers();
+        userStore.deleleALLUsers();
 
         userStore.add("name1", "login1", "email1");
         userStore.add("name2", "login2", "email2");
@@ -34,7 +34,7 @@ public class UserStoreTest {
 
         UserStore userStore = UserStore.getInstance();
 
-        userStore.workWithDataBase.deleleALLUsers();
+        userStore.deleleALLUsers();
 
         userStore.add("name1", "login1", "email1");
         userStore.add("name2", "login1", "email2");
@@ -50,7 +50,7 @@ public class UserStoreTest {
 
         UserStore userStore = UserStore.getInstance();
 
-        userStore.workWithDataBase.deleleALLUsers();
+        userStore.deleleALLUsers();
 
         userStore.add("name1", "login1", "email1");
         userStore.add("name2", "login2", "email2");
@@ -67,7 +67,7 @@ public class UserStoreTest {
 
         UserStore userStore = UserStore.getInstance();
 
-        userStore.workWithDataBase.deleleALLUsers();
+        userStore.deleleALLUsers();
 
 
 
