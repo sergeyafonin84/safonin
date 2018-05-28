@@ -10,7 +10,7 @@ public class UserStorage {
 
     private UserStorage() {
 
-        this.users.add(new User("root", "root@root", "root"));
+        this.users.add(new User("1", "root", "root@root", "root"));
 
     }
 

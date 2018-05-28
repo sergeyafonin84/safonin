@@ -20,7 +20,8 @@
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>
-            <td><c:out value="${user.login}"></c:out></td>
+            <%--<td><c:out value="${user.login}"></c:out></td>--%>
+            <td><a href="${pageContext.servletContext.contextPath}/webapp/Items.html?id=${user.id}"><c:out value="${user.login}"></a></c:out></td>
             <td><c:out value="${user.email}"></c:out></td>
         </tr>
     </c:forEach>

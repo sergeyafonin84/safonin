@@ -89,8 +89,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("UsersController doPost");
         resp.setContentType("text/html");
-        UserStorage.getInstance().add(new User(req.getParameter("login"),
-                req.getParameter("email"), null));
+        UserStorage.getInstance().add(new User("", req.getParameter("login"), req.getParameter("email"), null));
 //        this.users.add(req.getParameter("login"));
 //        this.doGet(req, resp);
 //        resp.sendRedirect(req.getContextPath() + "/UsersView.jsp");
